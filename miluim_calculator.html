@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>מחשבון מילואים</title>
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Assistant', 'Segoe UI', Arial, sans-serif; direction: rtl; background: #f5f5f5; }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      background: white;
+      border-bottom: 1px solid #e8e8e8;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 28px;
+      height: 64px;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo-img { height: 48px; width: auto; }
+
+    .nav-center {
+      font-size: 22px;
+      font-weight: 700;
+      color: #222;
+      flex: 1;
+      text-align: center;
+      letter-spacing: 0.5px;
+    }
+
+    /* placeholder so title stays centered */
+    .nav-spacer { width: 48px; }
+
+    /* ===== HERO ===== */
+    .page-hero {
+      background: #5bc55b;
+      position: relative;
+      overflow: hidden;
+      padding: 52px 32px 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 420px;
+    }
+
+    .hero-circle {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.18);
+    }
+    .c1 { width: 300px; height: 300px; top: -90px; right: -70px; }
+    .c2 { width: 200px; height: 200px; bottom: -60px; right: 130px; }
+    .c3 { width: 180px; height: 180px; top: 40px; left: -50px; }
+    .c4 { width: 120px; height: 120px; bottom: 20px; left: 220px; }
+
+    .hero-card {
+      background: white;
+      border-radius: 16px;
+      padding: 40px 44px 32px;
+      width: 100%;
+      max-width: 600px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-card h1 {
+      font-size: 26px;
+      font-weight: 700;
+      color: #222;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .hero-underline {
+      width: 48px;
+      height: 4px;
+      background: #f5c518;
+      border-radius: 2px;
+      margin: 0 auto 26px;
+    }
+
+    /* ===== FORM ===== */
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 16px;
+    }
+
+    .form-group { display: flex; flex-direction: column; gap: 5px; }
+
+    .form-group label {
+      font-size: 13px;
+      color: #444;
+      font-weight: 600;
+    }
+
+    .form-group input,
+    .form-group select {
+      border: 1.5px solid #ddd;
+      border-radius: 8px;
+      padding: 9px 12px;
+      font-size: 14px;
+      font-family: inherit;
+      color: #222;
+      outline: none;
+      direction: rtl;
+      background: white;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus { border-color: #5bc55b; }
+
+    .year-panel {
+      display: grid;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .year-card {
+      background: #f7fff7;
+      border: 1px solid #cde9c6;
+      border-radius: 14px;
+      padding: 18px;
+    }
+
+    .year-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .year-checkbox {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      cursor: pointer;
+      color: #225522;
+    }
+
+    .year-details {
+      display: none;
+      gap: 16px;
+      grid-template-columns: minmax(180px, 1fr) minmax(220px, 1fr);
+      grid-template-areas:
+        "routine-heading emergency-heading"
+        "routine fighter"
+        ". gamar"
+        ". other"
+        "total total";
+      align-items: start;
+    }
+
+    #year-2023-details,
+    #year-2024-details {
+      grid-template-areas:
+        "routine-heading emergency-heading"
+        "routine fighter"
+        "total total";
+    }
+
+    .year-details.visible {
+      display: grid;
+    }
+
+    .year-details > .routine-heading {
+      grid-area: routine-heading;
+      justify-self: center;
+      align-self: center;
+      color: #225522;
+      font-size: 16px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .year-details > .routine-group {
+      grid-area: routine;
+    }
+
+    .year-details > .emergency-heading {
+      grid-area: emergency-heading;
+      justify-self: center;
+      align-self: center;
+      color: #225522;
+      font-size: 16px;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .year-details > .fighter-group {
+      grid-area: fighter;
+    }
+
+    .year-details > .gamar-group {
+      grid-area: gamar;
+    }
+
+    .year-details > .other-group {
+      grid-area: other;
+    }
+
+    .year-details > .year-total {
+      grid-area: total;
+    }
+
+    .year-total {
+      grid-column: 1 / -1;
+      margin-top: 12px;
+      padding: 10px 14px;
+      background: #e7f8e7;
+      border-radius: 10px;
+      border: 1px solid #b5e3b3;
+      color: #1f6e1f;
+      font-weight: 700;
+    }
+
+    .year-emergency h4 {
+      margin: 0 0 6px;
+      font-size: 13px;
+      color: #225522;
+      font-weight: 700;
+    }
+
+    .year-total {
+      margin-top: 12px;
+      padding: 10px 14px;
+      background: #e7f8e7;
+      border-radius: 10px;
+      border: 1px solid #b5e3b3;
+      color: #1f6e1f;
+      font-weight: 700;
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 16px;
+      background: #f0fbf0;
+      border: 1px solid #d3eed3;
+      border-radius: 12px;
+      margin-top: 4px;
+      color: #2d6f2d;
+      font-weight: 700;
+    }
+
+    .btn-calc {
+      width: 100%;
+      background: #5bc55b;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 13px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      margin-top: 4px;
+    }
+    .btn-calc:hover { background: #48b048; }
+
+    /* ===== SPECIAL RULES ===== */
+    .special-rules-card {
+      background: #fff7e6;
+      border: 1px solid #ffe9b5;
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 16px;
+    }
+
+    .special-rules-card h3 {
+      color: #cc8800;
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .rule-checkbox {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 0;
+      cursor: pointer;
+      font-size: 13px;
+      color: #444;
+    }
+
+    .rule-checkbox input {
+      cursor: pointer;
+    }
+
+    /* ===== RESULTS ===== */
+    .result-area {
+      background: #f0faf0;
+      border: 1px solid #b3deb3;
+      border-radius: 8px;
+      padding: 18px 22px;
+      margin-top: 18px;
+      display: none;
+    }
+    .result-area.visible { display: block; }
+
+    .result-area h3 {
+      color: #2a7a2a;
+      font-size: 15px;
+      margin-bottom: 12px;
+    }
+
+    .result-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 7px 0;
+      border-bottom: 1px solid #d0ead0;
+      font-size: 13px;
+    }
+    .result-row:last-child { border-bottom: none; }
+    .result-row .label { color: #555; }
+    .result-row .value { font-weight: 700; color: #3a9a3a; }
+
+    .result-total {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0 0;
+      font-size: 16px;
+      font-weight: 700;
+      color: #1a5a1a;
+      border-top: 1.5px solid #b3deb3;
+      margin-top: 6px;
+    }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: #f0f0f0;
+      border-top: 1px solid #e0e0e0;
+      color: #888;
+      text-align: center;
+      padding: 16px;
+      font-size: 12px;
+      margin-top: 32px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar">
+  <div class="nav-right">
+    <img class="logo-img" src="/static/logo.png" alt="לוגו צה״ל" />
+  </div>
+  <div class="nav-center">מחשבון מילואים</div>
+  <div class="nav-spacer"></div>
+</nav>
+
+<!-- ===== HERO + CALCULATOR ===== -->
+<div class="page-hero">
+  <div class="hero-circle c1"></div>
+  <div class="hero-circle c2"></div>
+  <div class="hero-circle c3"></div>
+  <div class="hero-circle c4"></div>
+
+  <div class="hero-card">
+    <h1>מחשבון זכאויות מילואים 2025</h1>
+    <div class="hero-underline"></div>
+
+    <div class="year-panel">
+      <div class="year-card">
+        <div class="year-header">
+          <label class="year-checkbox" for="year-2023-checkbox">
+            <input type="checkbox" id="year-2023-checkbox" onchange="toggleYearSection('2023')" />
+            <span>תסמן אם עשית מילואים ב-2023</span>
+          </label>
+        </div>
+        <div class="year-details" id="year-2023-details">
+          <div class="routine-heading">שגרה</div>
+          <div class="emergency-heading">חירום</div>
+          <div class="routine-group form-group">
+            <label>כמות ימי מילואים בשגרה</label>
+            <input type="number" id="routine-2023" min="0" step="0.5" value="0" oninput="updateYearTotal('2023')" />
+          </div>
+          <div class="fighter-group form-group">
+            <label>כמות ימי מילואים בחירום</label>
+            <input type="number" id="combat-fighter-2023" min="0" step="0.5" value="0" oninput="updateYearTotal('2023')" />
+          </div>
+          <div class="year-total">סה"כ 2023: <span id="year-total-2023">0</span> ימים</div>
+        </div>
+      </div>
+
+      <div class="year-card">
+        <div class="year-header">
+          <label class="year-checkbox" for="year-2024-checkbox">
+            <input type="checkbox" id="year-2024-checkbox" onchange="toggleYearSection('2024')" />
+            <span>תסמן אם עשית מילואים ב-2024</span>
+          </label>
+        </div>
+        <div class="year-details" id="year-2024-details">
+          <div class="routine-heading">שגרה</div>
+          <div class="emergency-heading">חירום</div>
+          <div class="routine-group form-group">
+            <label>כמות ימי מילואים בשגרה</label>
+            <input type="number" id="routine-2024" min="0" step="0.5" value="0" oninput="updateYearTotal('2024')" />
+          </div>
+          <div class="fighter-group form-group">
+            <label>כמות ימי מילואים בחירום</label>
+            <input type="number" id="combat-fighter-2024" min="0" step="0.5" value="0" oninput="updateYearTotal('2024')" />
+          </div>
+          <div class="year-total">סה"כ 2024: <span id="year-total-2024">0</span> ימים</div>
+        </div>
+      </div>
+
+      <div class="year-card">
+        <div class="year-header">
+          <label class="year-checkbox" for="year-2025-checkbox">
+            <input type="checkbox" id="year-2025-checkbox" onchange="toggleYearSection('2025')" />
+            <span>תסמן אם עשית מילואים ב-2025</span>
+          </label>
+        </div>
+        <div class="year-details" id="year-2025-details">
+          <div class="routine-heading">שגרה</div>
+          <div class="emergency-heading">חירום</div>
+          <div class="routine-group form-group">
+            <label>כמות ימי מילואים בשגרה</label>
+            <input type="number" id="routine-2025" min="0" step="0.5" value="0" oninput="updateYearTotal('2025')" />
+          </div>
+          <div class="fighter-group form-group">
+            <label>כמות ימי מילואים במערך הלוחם</label>
+            <input type="number" id="combat-fighter-2025" min="0" step="0.5" value="0" oninput="updateYearTotal('2025')" />
+          </div>
+          <div class="gamar-group form-group">
+            <label>כמות ימי מילואים במערך הגמ"ר</label>
+            <input type="number" id="combat-gamar-2025" min="0" step="0.5" value="0" oninput="updateYearTotal('2025')" />
+          </div>
+          <div class="other-group form-group">
+            <label>כמות ימי מילואים במערך יתר</label>
+            <input type="number" id="combat-other-2025" min="0" step="0.5" value="0" oninput="updateYearTotal('2025')" />
+          </div>
+          <div class="year-total">סה"כ 2025: <span id="year-total-2025">0</span> ימים</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="summary-row">
+      <span>סה"כ ימי מילואים נבחרים</span>
+      <span id="total-days-display">0</span>
+    </div>
+
+    <button class="btn-calc" onclick="calculate()">חשב זכאויות</button>
+
+    <div class="result-area" id="results">
+      <h3>תוצאות החישוב</h3>
+      <div class="result-row" id="row-opt1">
+        <span class="label">OPT1</span>
+        <span class="value" id="r-opt1">—</span>
+      </div>
+      <div class="result-row" id="row-opt2">
+        <span class="label">OPT2</span>
+        <span class="value" id="r-opt2">—</span>
+      </div>
+      <div class="result-row" id="row-opt3">
+        <span class="label">OPT3</span>
+        <span class="value" id="r-opt3">—</span>
+      </div>
+      <div class="result-row" id="row-x">
+        <span class="label">X</span>
+        <span class="value" id="r-x">—</span>
+      </div>
+      <div class="result-row" id="row-y">
+        <span class="label">Y</span>
+        <span class="value" id="r-y">—</span>
+      </div>
+      <div class="result-row" id="row-z">
+        <span class="label">Z</span>
+        <span class="value" id="r-z">—</span>
+      </div>
+      <div class="result-row" id="row-days-payment">
+        <span class="label">כמות ימים לתשלום מנמוך ביותר</span>
+        <span class="value" id="r-days-payment">—</span>
+      </div>
+      <div class="result-row" id="row-days-payment-range">
+        <span class="label">כמות ימי תשלום 32-60</span>
+        <span class="value" id="r-days-payment-range">—</span>
+      </div>
+      <div class="result-row" id="row-used-other">
+        <span class="label">32-60 אחר</span>
+        <span class="value" id="r-used-other">—</span>
+      </div>
+      <div class="result-row" id="row-used-gamar">
+        <span class="label">32-60 גמ"ר</span>
+        <span class="value" id="r-used-gamar">—</span>
+      </div>
+      <div class="result-row" id="row-used-fighter">
+        <span class="label">32-60 לוחם</span>
+        <span class="value" id="r-used-fighter">—</span>
+      </div>
+      <div class="result-row" id="row-remain-other">
+        <span class="label">יתרה אחר</span>
+        <span class="value" id="r-remain-other">—</span>
+      </div>
+      <div class="result-row" id="row-remain-gamar">
+        <span class="label">יתרה גמ"ר</span>
+        <span class="value" id="r-remain-gamar">—</span>
+      </div>
+      <div class="result-row" id="row-remain-fighter">
+        <span class="label">יתרה לוחם</span>
+        <span class="value" id="r-remain-fighter">—</span>
+      </div>
+      <div class="result-row">
+        <span class="label">תגמול נוסף לפי ימים ב-2025</span>
+        <span class="value" id="r-additional-bonus">—</span>
+      </div>
+      <div class="result-row" id="row-special-bonus">
+        <span class="label">תגמול מיוחד בין 32-60</span>
+        <span class="value" id="r-special-bonus">—</span>
+      </div>
+      <div class="result-row" id="row-above-60-payment">
+        <span class="label">תשלום מעל 60</span>
+        <span class="value" id="r-above-60-payment">—</span>
+      </div>
+      <div class="result-total">
+        <span>סה״כ זכאות משוערת</span>
+        <span id="r-grand">—</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  © 2025 צבא ההגנה לישראל – כל הזכויות שמורות | החישוב הוא הערכה בלבד ואינו מחייב
+</div>
+
+<script>
+  const WORKING_DAYS_PER_MONTH = 22;
+  const MIN_DAILY = { soldier: 300, nco: 420, officer: 550 };
+  const COMBAT_BONUS = { long: 3000, short: 1500, min_long: 30, min_short: 14 };
+  const FAMILY_DAILY = { married: 25, parent: 40, single: 0 };
+  const YEARS = ['2023', '2024', '2025'];
+  let appConfig = { mode: 'test' };
+
+  async function loadConfig() {
+    try {
+      const response = await fetch('/config.json');
+      if (response.ok) {
+        appConfig = await response.json();
+      }
+    } catch (error) {
+      console.log('Config file not found, using default mode: test');
+    }
+  }
+
+  function toggleYearSection(year) {
+    const details = document.getElementById(`year-${year}-details`);
+    const checkbox = document.getElementById(`year-${year}-checkbox`);
+    if (checkbox.checked) {
+      details.classList.add('visible');
+    } else {
+      details.classList.remove('visible');
+    }
+    updateYearTotal(year);
+  }
+
+  function getRoutineTotal(year) {
+    const checked = document.getElementById(`year-${year}-checkbox`).checked;
+    if (!checked) return 0;
+    return parseFloat(document.getElementById(`routine-${year}`).value) || 0;
+  }
+
+  function getLowestEmergency(year) {
+    const checked = document.getElementById(`year-${year}-checkbox`).checked;
+    if (!checked) return 0;
+    const fighter = parseFloat(document.getElementById(`combat-fighter-${year}`).value) || 0;
+    const gamarEl = document.getElementById(`combat-gamar-${year}`);
+    const gamar = gamarEl ? (parseFloat(gamarEl.value) || 0) : 0;
+    const otherEl = document.getElementById(`combat-other-${year}`);
+    const other = otherEl ? (parseFloat(otherEl.value) || 0) : 0;
+    // קח את הערך בעדיפות: אחר > גמר > לוחם
+    if (other > 0) return other;
+    if (gamar > 0) return gamar;
+    if (fighter > 0) return fighter;
+    return 0;
+  }
+
+  function getEmergencyTotal(year) {
+    const checked = document.getElementById(`year-${year}-checkbox`).checked;
+    if (!checked) return 0;
+    const fighter = parseFloat(document.getElementById(`combat-fighter-${year}`).value) || 0;
+    const gamarEl = document.getElementById(`combat-gamar-${year}`);
+    const gamar = gamarEl ? (parseFloat(gamarEl.value) || 0) : 0;
+    const otherEl = document.getElementById(`combat-other-${year}`);
+    const other = otherEl ? (parseFloat(otherEl.value) || 0) : 0;
+    return fighter + gamar + other;
+  }
+
+  function getYearTotal(year) {
+    const checked = document.getElementById(`year-${year}-checkbox`).checked;
+    if (!checked) return 0;
+    const routine = parseFloat(document.getElementById(`routine-${year}`).value) || 0;
+    const fighter = parseFloat(document.getElementById(`combat-fighter-${year}`).value) || 0;
+    const gamarEl = document.getElementById(`combat-gamar-${year}`);
+    const gamar = gamarEl ? (parseFloat(gamarEl.value) || 0) : 0;
+    const otherEl = document.getElementById(`combat-other-${year}`);
+    const other = otherEl ? (parseFloat(otherEl.value) || 0) : 0;
+    return routine + fighter + gamar + other;
+  }
+
+  function updateYearTotal(year) {
+    const total = getYearTotal(year);
+    document.getElementById(`year-total-${year}`).textContent = total;
+    document.getElementById('total-days-display').textContent = getTotalDays();
+  }
+
+  function getTotalDays() {
+    return YEARS.reduce((sum, year) => {
+      const checked = document.getElementById(`year-${year}-checkbox`).checked;
+      return sum + (checked ? getYearTotal(year) : 0);
+    }, 0);
+  }
+
+  function calculate() {
+    const totalDays = getTotalDays();
+    const salary = 0;
+    const serviceType = 'support';
+    const family = 'single';
+    const rank = 'soldier';
+
+    if (totalDays === 0) {
+      alert('אנא בחר שנה והזן לפחות יום שגרה או חירום');
+      return;
+    }
+
+    const dailyBase = Math.max(salary > 0 ? Math.round(salary / WORKING_DAYS_PER_MONTH) : 0, MIN_DAILY[rank]);
+    const total = dailyBase * totalDays;
+    let bonus = 0;
+    if (serviceType === 'combat') {
+      if (totalDays >= COMBAT_BONUS.min_long) bonus = COMBAT_BONUS.long;
+      else if (totalDays >= COMBAT_BONUS.min_short) bonus = COMBAT_BONUS.short;
+    }
+    const familyBonus = (FAMILY_DAILY[family] || 0) * totalDays;
+    const grand = total + bonus + familyBonus;
+    const fmt = n => (n).toLocaleString('he-IL', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ₪';
+
+    const opt1 = getYearTotal('2023') + getEmergencyTotal('2024');
+    const opt2 = getYearTotal('2024');
+    const opt3 = getRoutineTotal('2025');
+    const x = Math.max(opt1, opt2, opt3);
+    const y = 31 - x;
+    const other25 = parseFloat(document.getElementById('combat-other-2025').value) || 0;
+    const gamar25 = parseFloat(document.getElementById('combat-gamar-2025').value) || 0;
+    const fighter25 = parseFloat(document.getElementById('combat-fighter-2025').value) || 0;
+    let adjustedOther = other25;
+    let adjustedGamar = gamar25;
+    let adjustedFighter = fighter25;
+    let remainingY = y;
+    if (remainingY > 0) {
+      const used = Math.min(adjustedOther, remainingY);
+      adjustedOther -= used;
+      remainingY -= used;
+    }
+    if (remainingY > 0) {
+      const used = Math.min(adjustedGamar, remainingY);
+      adjustedGamar -= used;
+      remainingY -= used;
+    }
+    if (remainingY > 0) {
+      const used = Math.min(adjustedFighter, remainingY);
+      adjustedFighter -= used;
+      remainingY -= used;
+    }
+    const z = adjustedOther + adjustedGamar + adjustedFighter;
+    const daysPayment32to60 = Math.max(0, Math.min(z, 60) - 31);
+    let remainingToFill = daysPayment32to60;
+    let daysPaymentfromLowest = 0;
+    let usedOther = 0;
+    let usedGamar = 0;
+    let usedFighter = 0;
+    const categories = [
+      { name: 'other', value: adjustedOther },
+      { name: 'gamar', value: adjustedGamar },
+      { name: 'fighter', value: adjustedFighter }
+    ];
+    let firstFilled = false;
+    for (const cat of categories) {
+      if (remainingToFill <= 0) break;
+      const used = Math.min(cat.value, remainingToFill);
+      remainingToFill -= used;
+      if (!firstFilled && used > 0) {
+        daysPaymentfromLowest = used;
+        firstFilled = true;
+      }
+      if (cat.name === 'other') usedOther = used;
+      if (cat.name === 'gamar') usedGamar = used;
+      if (cat.name === 'fighter') usedFighter = used;
+    }
+    const remainingOther = adjustedOther - usedOther;
+    const remainingGamar = adjustedGamar - usedGamar;
+    const remainingFighter = adjustedFighter - usedFighter;
+    const specialBonus = daysPayment32to60 * 133.33;
+    const above60Payment = (remainingFighter * 133.33) + (remainingGamar * 60) + (remainingOther * 40);
+    const total2025 = getYearTotal('2025');
+    const emergency2025 = (parseFloat(document.getElementById('combat-fighter-2025').value) || 0) +
+                          (parseFloat(document.getElementById('combat-gamar-2025').value) || 0) +
+                          (parseFloat(document.getElementById('combat-other-2025').value) || 0);
+    
+    let additionalBonus = 0;
+    if (total2025 >= 10 && total2025 <= 14.5) additionalBonus = 1452;
+    else if (total2025 >= 15 && total2025 <= 19.5) additionalBonus = 2904;
+    else if (total2025 >= 20 && total2025 <= 36.5) additionalBonus = 4356;
+    else if (total2025 >= 37) additionalBonus = 5808;
+    
+    // Check special rule: emergency days under 31 (always active)
+    const showSpecialRule = emergency2025 < 31;
+    
+    // Check if only 2025 is active (no activity in previous years)
+    const only2025Active = document.getElementById('year-2025-checkbox').checked &&
+                           !document.getElementById('year-2023-checkbox').checked &&
+                           !document.getElementById('year-2024-checkbox').checked;
+    
+    let finalGrand = 0;
+    if (showSpecialRule) {
+      // Special rule active: Z * 133.33 + additional bonus, or differential calculation if only 2025 active
+      let specialRulePayment;
+      if (only2025Active) {
+        // Differential calculation: fighter × 133.33 + gamar × 60 + other × 40
+        specialRulePayment = (adjustedFighter * 133.33) + (adjustedGamar * 60) + (adjustedOther * 40);
+      } else {
+        // Standard: Z × 133.33
+        specialRulePayment = z * 133.33;
+      }
+      finalGrand = specialRulePayment + additionalBonus;
+      
+      // Hide 32-60 and above-60 rows
+      document.getElementById('row-used-other').style.display = 'none';
+      document.getElementById('row-used-gamar').style.display = 'none';
+      document.getElementById('row-used-fighter').style.display = 'none';
+      document.getElementById('row-remain-other').style.display = 'none';
+      document.getElementById('row-remain-gamar').style.display = 'none';
+      document.getElementById('row-remain-fighter').style.display = 'none';
+      document.getElementById('row-special-bonus').style.display = 'none';
+      
+      // Show special rule payment only if > 0
+      if (specialRulePayment > 0) {
+        document.getElementById('r-above-60-payment').textContent = fmt(specialRulePayment);
+        document.getElementById('row-above-60-payment').style.display = 'flex';
+        const labelText = only2025Active ? 'תשלום מיוחד (דיפרנציאלי)' : 'תשלום מיוחד';
+        document.getElementById('row-above-60-payment').querySelector('.label').textContent = labelText;
+      } else {
+        document.getElementById('row-above-60-payment').style.display = 'none';
+      }
+    } else {
+      // Normal calculation
+      finalGrand = Math.round((specialBonus + additionalBonus + above60Payment) * 100) / 100;
+      
+      // Show all rows
+      document.getElementById('row-used-other').style.display = 'flex';
+      document.getElementById('row-used-gamar').style.display = 'flex';
+      document.getElementById('row-used-fighter').style.display = 'flex';
+      document.getElementById('row-remain-other').style.display = 'flex';
+      document.getElementById('row-remain-gamar').style.display = 'flex';
+      document.getElementById('row-remain-fighter').style.display = 'flex';
+      document.getElementById('row-special-bonus').style.display = 'flex';
+      document.getElementById('row-above-60-payment').style.display = 'flex';
+      
+      // Reset label
+      document.getElementById('row-above-60-payment').querySelector('.label').textContent = 'תשלום מעל 60';
+      document.getElementById('r-above-60-payment').textContent = above60Payment <= 0 ? 'אין זכאות' : fmt(above60Payment);
+    }
+    
+    document.getElementById('r-opt1').textContent = opt1;
+    document.getElementById('r-opt2').textContent = opt2;
+    document.getElementById('r-opt3').textContent = opt3;
+    document.getElementById('r-x').textContent = x;
+    document.getElementById('r-y').textContent = y;
+    document.getElementById('r-z').textContent = z;
+    document.getElementById('r-days-payment').textContent = daysPaymentfromLowest <= 0 ? 'אין זכאות' : daysPaymentfromLowest;
+    document.getElementById('r-days-payment-range').textContent = daysPayment32to60 <= 0 ? 'אין זכאות' : daysPayment32to60;
+    document.getElementById('r-used-other').textContent = usedOther;
+    document.getElementById('r-used-gamar').textContent = usedGamar;
+    document.getElementById('r-used-fighter').textContent = usedFighter;
+    document.getElementById('r-remain-other').textContent = remainingOther;
+    document.getElementById('r-remain-gamar').textContent = remainingGamar;
+    document.getElementById('r-remain-fighter').textContent = remainingFighter;
+    document.getElementById('r-additional-bonus').textContent = additionalBonus === 0 ? 'אין זכאות' : fmt(additionalBonus);
+    document.getElementById('r-special-bonus').textContent = daysPayment32to60 <= 0 ? 'אין זכאות' : fmt(specialBonus);
+    document.getElementById('r-grand').textContent = fmt(finalGrand);
+
+    // Apply visibility based on mode (client mode hides internal calculations)
+    if (appConfig.mode === 'client') {
+      // Hide debug/intermediate calculation rows in client mode
+      document.getElementById('row-opt1').style.display = 'none';
+      document.getElementById('row-opt2').style.display = 'none';
+      document.getElementById('row-opt3').style.display = 'none';
+      document.getElementById('row-z').style.display = 'none';
+      document.getElementById('row-days-payment').style.display = 'none';
+      document.getElementById('row-days-payment-range').style.display = 'none';
+      document.getElementById('row-used-other').style.display = 'none';
+      document.getElementById('row-used-gamar').style.display = 'none';
+      document.getElementById('row-used-fighter').style.display = 'none';
+      document.getElementById('row-remain-other').style.display = 'none';
+      document.getElementById('row-remain-gamar').style.display = 'none';
+      document.getElementById('row-remain-fighter').style.display = 'none';
+      
+      // Hide special bonus row when special rule is active (replaced by תשלום מיוחד)
+      if (showSpecialRule) {
+        document.getElementById('row-special-bonus').style.display = 'none';
+      }
+    } else {
+      // In test mode, show all rows (restore visibility if it was hidden before)
+      document.getElementById('row-opt1').style.display = 'flex';
+      document.getElementById('row-opt2').style.display = 'flex';
+      document.getElementById('row-opt3').style.display = 'flex';
+      document.getElementById('row-days-payment').style.display = 'flex';
+      document.getElementById('row-days-payment-range').style.display = 'flex';
+    }
+
+    const res = document.getElementById('results');
+    res.classList.add('visible');
+    res.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  window.addEventListener('DOMContentLoaded', () => {
+    loadConfig();
+    YEARS.forEach(year => updateYearTotal(year));
+  });
+</script>
+</body>
+</html>
