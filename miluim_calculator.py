@@ -214,6 +214,9 @@ def create_flask_app():
 # הרצה ישירה לדוגמה
 # ─────────────────────────────────────────────
 
+# ── חשיפת אפליקציית Flask לגוניקורן ──
+app = create_flask_app()
+
 if __name__ == "__main__":
     import sys
 
