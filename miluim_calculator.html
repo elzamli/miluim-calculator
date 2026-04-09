@@ -350,6 +350,46 @@
       font-size: 12px;
       margin-top: 32px;
     }
+    /* ===== MOBILE ===== */
+    @media (max-width: 540px) {
+      .navbar { padding: 0 14px; height: 56px; }
+      .nav-center { font-size: 17px; }
+      .logo-img { height: 38px; }
+
+      .page-hero { padding: 24px 12px 28px; min-height: unset; }
+
+      .hero-card { padding: 24px 16px 20px; border-radius: 12px; }
+      .hero-card h1 { font-size: 20px; }
+
+      .form-grid { grid-template-columns: 1fr; }
+
+      .year-details {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+          "routine-heading"
+          "routine"
+          "emergency-heading"
+          "fighter"
+          "gamar"
+          "other"
+          "total";
+      }
+
+      #year-2023-details,
+      #year-2024-details {
+        grid-template-areas:
+          "routine-heading"
+          "routine"
+          "emergency-heading"
+          "fighter"
+          "total";
+      }
+
+      .year-checkbox { font-size: 14px; }
+
+      .result-row { font-size: 12px; }
+      .result-total { font-size: 15px; }
+    }
   </style>
 </head>
 <body>
