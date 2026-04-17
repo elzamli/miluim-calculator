@@ -527,7 +527,7 @@
           </div>
           <div id="extra-field-commander-2025" class="extra-field-2025 form-group" style="display:none;">
             <label>כמות ימים כקצין מפקד לוחם</label>
-            <input type="number" id="commander-days-2025" min="0" step="0.5" value="0" />
+            <input type="number" id="commander-days-2025" min="0" step="0.5" placeholder="כל הימים (ברירת מחדל)" />
           </div>
           <div id="extra-field-age-exempt-2025" class="extra-field-2025 form-group" style="display:none;">
             <label>כמות ימים כמוחרג גיל</label>
@@ -627,8 +627,37 @@
         <span class="label">תשלום מעל 60</span>
         <span class="value" id="r-above-60-payment">—</span>
       </div>
+      <!-- תוספת מפקד לוחם -->
+      <div class="result-row" id="row-commander-routine-days">
+        <span class="label">מפקד לוחם — שגרה מעל 60 (ימים)</span>
+        <span class="value" id="r-commander-routine-days">—</span>
+      </div>
+      <div class="result-row" id="row-commander-gamar-days">
+        <span class="label">מפקד לוחם — גמ"ר מעל 60 (ימים)</span>
+        <span class="value" id="r-commander-gamar-days">—</span>
+      </div>
+      <div class="result-row" id="row-commander-yeter-days">
+        <span class="label">מפקד לוחם — יתר מעל 60 (ימים)</span>
+        <span class="value" id="r-commander-yeter-days">—</span>
+      </div>
+      <div class="result-row" id="row-commander-routine-pay">
+        <span class="label">מפקד לוחם — תוספת שגרה</span>
+        <span class="value" id="r-commander-routine-pay">—</span>
+      </div>
+      <div class="result-row" id="row-commander-gamar-pay">
+        <span class="label">מפקד לוחם — תוספת גמ"ר</span>
+        <span class="value" id="r-commander-gamar-pay">—</span>
+      </div>
+      <div class="result-row" id="row-commander-yeter-pay">
+        <span class="label">מפקד לוחם — תוספת יתר</span>
+        <span class="value" id="r-commander-yeter-pay">—</span>
+      </div>
+      <div class="result-row" id="row-commander-extra">
+        <span class="label">סה"כ תוספת מפקד לוחם</span>
+        <span class="value" id="r-commander-extra">—</span>
+      </div>
       <div class="result-row">
-        <span class="label">תגמול נוסף לפי ימים ב-2025</span>
+        <span class="label">תגמול נוסף ממס הכנסה לפי ימים</span>
         <span class="value" id="r-additional-bonus">—</span>
       </div>
       <!-- שורות debug -->
@@ -641,7 +670,7 @@
         <span class="value" id="r-days-payment-range">—</span>
       </div>
       <div class="result-total">
-        <span>סה״כ זכאות משוערת</span>
+        <span>סה״כ צה״ל+מס הכנסה (משוערת)</span>
         <span id="r-grand">—</span>
       </div>
     </div>
@@ -775,7 +804,8 @@
     const other25   = parseFloat(document.getElementById('combat-other-2025').value)   || 0;
     const gamar25   = parseFloat(document.getElementById('combat-gamar-2025').value)   || 0;
     const fighter25 = parseFloat(document.getElementById('combat-fighter-2025').value) || 0;
-    const routine2025 = parseFloat(document.getElementById('routine-2025').value) || 0;
+    const routineRaw  = parseFloat(document.getElementById('routine-2025').value) || 0;
+    const routine2025 = Math.min(routineRaw, 60); // קיטום ל-60 בחישוב הרגיל
 
     const z = other25 + gamar25 + fighter25;
 
@@ -816,7 +846,8 @@
     // Payments
     const diffPayment031 = (fighter031 * 133.33) + (gamar031 * 60) + (yeter031 * 40);
     const specialBonus   = days3260 * 133.33;
-    const above60Payment = (fighter60plus * 133.33) + (gamar60plus * 60) + (yeter60plus * 40) + (routine60plus * 133.33);
+    const above60Payment = (fighter60plus * 133.33) + (gamar60plus * 60) + (yeter60plus * 40);
+    // שגרה מעל 60 לא משולמת בחישוב הרגיל (routine60plus תמיד 0 לאחר קיטום)
 
     const total2025 = getYearTotal('2025');
     let additionalBonus = 0;
@@ -825,8 +856,28 @@
     else if (total2025 >= 20 && total2025 <= 36.5) additionalBonus = 4356;
     else if (total2025 >= 37) additionalBonus = 5808;
 
+    // תוספת מפקד לוחם
+    const isCommander        = document.getElementById('check-commander-2025').checked;
+    const commanderDaysInput = parseFloat(document.getElementById('commander-days-2025').value);
+    const commanderDays      = isNaN(commanderDaysInput)
+      ? (routineRaw + fighter25 + gamar25 + other25)
+      : commanderDaysInput;
+
+    let commanderExtra = 0;
+    let routineCmd = 0, gamarCmd = 0, yeterCmd = 0;
+    if (isCommander && commanderDays > 0) {
+      const routineAbove60   = Math.max(0, Math.min(routineRaw, 180) - 60);
+      const commanderAbove60 = Math.max(0, commanderDays - 60);
+      routineCmd = Math.min(routineAbove60, commanderAbove60);
+      const rem1 = commanderAbove60 - routineCmd;
+      gamarCmd   = Math.min(gamar60plus, rem1);
+      const rem2 = rem1 - gamarCmd;
+      yeterCmd   = Math.min(yeter60plus, rem2);
+      commanderExtra = (routineCmd * 133.33) + (gamarCmd * 73.33) + (yeterCmd * 93.33);
+    }
+
     const mainPayment = z === 0 ? 0 : (diffPayment031 + specialBonus + above60Payment);
-    const finalGrand  = Math.round((mainPayment + additionalBonus) * 100) / 100;
+    const finalGrand  = Math.round((mainPayment + additionalBonus + commanderExtra) * 100) / 100;
 
     document.getElementById('row-used-other').style.display   = yeter3260   > 0 ? 'flex' : 'none';
     document.getElementById('row-used-gamar').style.display   = gamar3260   > 0 ? 'flex' : 'none';
@@ -867,6 +918,25 @@
     document.getElementById('r-special-bonus').textContent = days3260 <= 0 ? 'אין זכאות' : fmt(specialBonus);
     document.getElementById('r-grand').textContent = fmt(finalGrand);
 
+    // תוספת מפקד לוחם — DOM
+    const showCmd = isCommander && commanderExtra > 0;
+    document.getElementById('row-commander-routine-days').style.display = showCmd ? 'flex' : 'none';
+    document.getElementById('row-commander-gamar-days').style.display   = showCmd ? 'flex' : 'none';
+    document.getElementById('row-commander-yeter-days').style.display   = showCmd ? 'flex' : 'none';
+    document.getElementById('row-commander-routine-pay').style.display  = showCmd ? 'flex' : 'none';
+    document.getElementById('row-commander-gamar-pay').style.display    = showCmd ? 'flex' : 'none';
+    document.getElementById('row-commander-yeter-pay').style.display    = showCmd ? 'flex' : 'none';
+    document.getElementById('row-commander-extra').style.display        = showCmd ? 'flex' : 'none';
+    if (showCmd) {
+      document.getElementById('r-commander-routine-days').textContent = routineCmd;
+      document.getElementById('r-commander-gamar-days').textContent   = gamarCmd;
+      document.getElementById('r-commander-yeter-days').textContent   = yeterCmd;
+      document.getElementById('r-commander-routine-pay').textContent  = routineCmd > 0 ? fmt(routineCmd * 133.33) : '—';
+      document.getElementById('r-commander-gamar-pay').textContent    = gamarCmd   > 0 ? fmt(gamarCmd * 73.33)   : '—';
+      document.getElementById('r-commander-yeter-pay').textContent    = yeterCmd   > 0 ? fmt(yeterCmd * 93.33)   : '—';
+      document.getElementById('r-commander-extra').textContent        = fmt(commanderExtra);
+    }
+
     // Apply visibility based on mode (client mode hides internal calculations)
     if (appConfig.mode === 'client') {
       // Hide debug/intermediate calculation rows in client mode
@@ -887,6 +957,13 @@
       document.getElementById('row-diff-gamar').style.display = 'none';
       document.getElementById('row-diff-other').style.display = 'none';
       document.getElementById('row-routine-in-3260').style.display = 'none';
+      // מפקד לוחם — פירוט נסתר ב-client
+      document.getElementById('row-commander-routine-days').style.display = 'none';
+      document.getElementById('row-commander-gamar-days').style.display   = 'none';
+      document.getElementById('row-commander-yeter-days').style.display   = 'none';
+      document.getElementById('row-commander-routine-pay').style.display  = 'none';
+      document.getElementById('row-commander-gamar-pay').style.display    = 'none';
+      document.getElementById('row-commander-yeter-pay').style.display    = 'none';
     } else {
       // In test mode, show all rows (restore visibility if it was hidden before)
       document.getElementById('row-opt1').style.display = 'flex';
