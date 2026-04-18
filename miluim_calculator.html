@@ -677,7 +677,7 @@
         <span class="label">סה"כ תוספת מוחרג גיל</span>
         <span class="value" id="r-age-extra">—</span>
       </div>
-      <div class="result-row">
+      <div class="result-row" id="row-additional-bonus">
         <span class="label">תגמול נוסף ממס הכנסה לפי ימים</span>
         <span class="value" id="r-additional-bonus">—</span>
       </div>
@@ -928,7 +928,7 @@
     document.getElementById('row-remain-other').style.display   = yeter60plus   > 0 ? 'flex' : 'none';
     document.getElementById('row-remain-gamar').style.display   = gamar60plus   > 0 ? 'flex' : 'none';
     document.getElementById('row-remain-fighter').style.display = fighter60plus > 0 ? 'flex' : 'none';
-    document.getElementById('row-special-bonus').style.display  = 'flex';
+    document.getElementById('row-special-bonus').style.display  = days3260 > 0 ? 'flex' : 'none';
     document.getElementById('row-diff-payment').style.display   = diffPayment031 > 0 ? 'flex' : 'none';
     document.getElementById('row-diff-fighter').style.display   = fighter031 > 0 ? 'flex' : 'none';
     document.getElementById('row-diff-gamar').style.display     = gamar031   > 0 ? 'flex' : 'none';
@@ -957,6 +957,7 @@
     document.getElementById('r-diff-gamar').textContent   = gamar031;
     document.getElementById('r-diff-other').textContent   = yeter031;
     document.getElementById('r-routine-in-3260').textContent = routine3260;
+    document.getElementById('row-additional-bonus').style.display = additionalBonus > 0 ? 'flex' : 'none';
     document.getElementById('r-additional-bonus').textContent = additionalBonus === 0 ? 'אין זכאות' : fmt(additionalBonus);
     document.getElementById('r-special-bonus').textContent = days3260 <= 0 ? 'אין זכאות' : fmt(specialBonus);
     document.getElementById('r-grand').textContent = fmt(finalGrand);
