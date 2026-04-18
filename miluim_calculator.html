@@ -7,12 +7,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&display=swap" rel="stylesheet"/>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Assistant', 'Segoe UI', Arial, sans-serif; direction: rtl; background: #f5f5f5; }
+    body { font-family: 'Assistant', 'Segoe UI', Arial, sans-serif; direction: rtl; background: #eef4fb; }
 
     /* ===== NAVBAR ===== */
     .navbar {
-      background: white;
-      border-bottom: 1px solid #e8e8e8;
+      background: #1b2f6e;
+      border-bottom: 1px solid #14245a;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -30,7 +30,7 @@
     .nav-center {
       font-size: 22px;
       font-weight: 700;
-      color: #222;
+      color: #ffffff;
       flex: 1;
       text-align: center;
       letter-spacing: 0.5px;
@@ -41,7 +41,7 @@
 
     /* ===== HERO ===== */
     .page-hero {
-      background: #7c3aed;
+      background: #1b2f6e;
       position: relative;
       overflow: hidden;
       padding: 52px 32px 48px;
@@ -82,7 +82,7 @@
     .hero-underline {
       width: 48px;
       height: 4px;
-      background: #f5c518;
+      background: #00b3d4;
       border-radius: 2px;
       margin: 0 auto 26px;
     }
@@ -117,7 +117,7 @@
     }
 
     .form-group input:focus,
-    .form-group select:focus { border-color: #5bc55b; }
+    .form-group select:focus { border-color: #1565c0; }
 
     .year-panel {
       display: grid;
@@ -126,8 +126,8 @@
     }
 
     .year-card {
-      background: #f7fff7;
-      border: 1px solid #cde9c6;
+      background: #f0f6fd;
+      border: 1px solid #c0d4ee;
       border-radius: 14px;
       padding: 18px;
     }
@@ -147,7 +147,7 @@
       gap: 10px;
       font-weight: 700;
       cursor: pointer;
-      color: #225522;
+      color: #1b2f6e;
     }
 
     .year-details {
@@ -179,7 +179,7 @@
       grid-area: routine-heading;
       justify-self: center;
       align-self: center;
-      color: #225522;
+      color: #1b2f6e;
       font-size: 16px;
       font-weight: 700;
       text-align: center;
@@ -193,7 +193,7 @@
       grid-area: emergency-heading;
       justify-self: center;
       align-self: center;
-      color: #225522;
+      color: #1b2f6e;
       font-size: 16px;
       font-weight: 700;
       text-align: center;
@@ -219,10 +219,10 @@
       grid-column: 1 / -1;
       margin-top: 12px;
       padding: 10px 14px;
-      background: #e7f8e7;
+      background: #ddeaf8;
       border-radius: 10px;
-      border: 1px solid #b5e3b3;
-      color: #1f6e1f;
+      border: 1px solid #b0ccec;
+      color: #1b2f6e;
       font-weight: 700;
     }
 
@@ -249,14 +249,14 @@
       cursor: pointer;
       font-size: 14px;
       font-weight: 600;
-      color: #225522;
+      color: #1b2f6e;
     }
 
     .radio-group-2025 input[type="checkbox"] {
       width: 16px;
       height: 16px;
       cursor: pointer;
-      accent-color: #5bc55b;
+      accent-color: #1565c0;
     }
 
     .extra-field-2025 {
@@ -266,10 +266,10 @@
     .year-total {
       margin-top: 12px;
       padding: 10px 14px;
-      background: #e7f8e7;
+      background: #ddeaf8;
       border-radius: 10px;
-      border: 1px solid #b5e3b3;
-      color: #1f6e1f;
+      border: 1px solid #b0ccec;
+      color: #1b2f6e;
       font-weight: 700;
     }
 
@@ -278,17 +278,17 @@
       justify-content: space-between;
       align-items: center;
       padding: 14px 16px;
-      background: #f0fbf0;
-      border: 1px solid #d3eed3;
+      background: #e4eef9;
+      border: 1px solid #c0d4ee;
       border-radius: 12px;
       margin-top: 4px;
-      color: #2d6f2d;
+      color: #1b2f6e;
       font-weight: 700;
     }
 
     .btn-calc {
       width: 100%;
-      background: #5bc55b;
+      background: #1565c0;
       color: white;
       border: none;
       border-radius: 50px;
@@ -299,7 +299,7 @@
       font-family: inherit;
       margin-top: 4px;
     }
-    .btn-calc:hover { background: #48b048; }
+    .btn-calc:hover { background: #0d47a1; }
 
     /* ===== SPECIAL RULES ===== */
     .special-rules-card {
@@ -333,8 +333,8 @@
 
     /* ===== RESULTS ===== */
     .result-area {
-      background: #f0faf0;
-      border: 1px solid #b3deb3;
+      background: #f0f6fd;
+      border: 1px solid #b0ccec;
       border-radius: 8px;
       padding: 18px 22px;
       margin-top: 18px;
@@ -343,7 +343,7 @@
     .result-area.visible { display: block; }
 
     .result-area h3 {
-      color: #2a7a2a;
+      color: #1b2f6e;
       font-size: 15px;
       margin-bottom: 12px;
     }
@@ -352,12 +352,12 @@
       display: flex;
       justify-content: space-between;
       padding: 7px 0;
-      border-bottom: 1px solid #d0ead0;
+      border-bottom: 1px solid #c8ddf5;
       font-size: 13px;
     }
     .result-row:last-child { border-bottom: none; }
     .result-row .label { color: #555; }
-    .result-row .value { font-weight: 700; color: #3a9a3a; }
+    .result-row .value { font-weight: 700; color: #1565c0; }
 
     .result-total {
       display: flex;
@@ -365,16 +365,16 @@
       padding: 12px 0 0;
       font-size: 16px;
       font-weight: 700;
-      color: #1a5a1a;
-      border-top: 1.5px solid #b3deb3;
+      color: #1b2f6e;
+      border-top: 1.5px solid #b0ccec;
       margin-top: 6px;
     }
 
     /* ===== FOOTER ===== */
     .footer {
-      background: #f0f0f0;
-      border-top: 1px solid #e0e0e0;
-      color: #888;
+      background: #1b2f6e;
+      border-top: 1px solid #14245a;
+      color: #a8c4e8;
       text-align: center;
       padding: 16px;
       font-size: 12px;
@@ -531,7 +531,7 @@
           </div>
           <div id="extra-field-age-exempt-2025" class="extra-field-2025 form-group" style="display:none;">
             <label>כמות ימים כמוחרג גיל</label>
-            <input type="number" id="age-exempt-days-2025" min="0" step="0.5" value="0" />
+            <input type="number" id="age-exempt-days-2025" min="0" step="0.5" placeholder="כל ימי 2025 (ברירת מחדל)" />
           </div>
           <div class="year-total">סה"כ 2025: <span id="year-total-2025">0</span> ימים</div>
         </div>
@@ -655,6 +655,27 @@
       <div class="result-row" id="row-commander-extra">
         <span class="label">סה"כ תוספת מפקד לוחם</span>
         <span class="value" id="r-commander-extra">—</span>
+      </div>
+      <!-- מוחרג גיל -->
+      <div class="result-row" id="row-age-i59-days">
+        <span class="label">מוחרג גיל — ימים ב-133.33 (I59)</span>
+        <span class="value" id="r-age-i59-days">—</span>
+      </div>
+      <div class="result-row" id="row-age-i60-days">
+        <span class="label">מוחרג גיל — פער (I60)</span>
+        <span class="value" id="r-age-i60-days">—</span>
+      </div>
+      <div class="result-row" id="row-age-yeter-days">
+        <span class="label">מוחרג גיל — יתר (ימים)</span>
+        <span class="value" id="r-age-yeter-days">—</span>
+      </div>
+      <div class="result-row" id="row-age-gamar-days">
+        <span class="label">מוחרג גיל — גמ"ר (ימים)</span>
+        <span class="value" id="r-age-gamar-days">—</span>
+      </div>
+      <div class="result-row" id="row-age-extra">
+        <span class="label">סה"כ תוספת מוחרג גיל</span>
+        <span class="value" id="r-age-extra">—</span>
       </div>
       <div class="result-row">
         <span class="label">תגמול נוסף ממס הכנסה לפי ימים</span>
@@ -876,8 +897,30 @@
       commanderExtra = (routineCmd * 133.33) + (gamarCmd * 73.33) + (yeterCmd * 93.33);
     }
 
+    // תוספת מוחרג גיל
+    const isAgeExempt        = document.getElementById('check-age-exempt-2025').checked;
+    const ageExemptDaysInput = parseFloat(document.getElementById('age-exempt-days-2025').value);
+    const ageExemptDays = isNaN(ageExemptDaysInput)
+      ? (routineRaw + fighter25 + gamar25 + other25)
+      : ageExemptDaysInput;
+
+    let ageExemptExtra = 0;
+    let ageI59 = 0, ageI60 = 0, ageYeterDays = 0, ageGamarDays = 0;
+    if (isAgeExempt && ageExemptDays > 0) {
+      const I53 = Math.min(ageExemptDays, 180);
+      const I54 = Math.min(31, routineRaw);
+      const I55 = (other25 - adjYeter) + (gamar25 - adjGamar) + (fighter25 - adjFighter);
+      ageI59 = Math.min(I53, I54 + I55);
+      ageI60 = Math.max(0, I53 - ageI59);
+      const totalYeter = adjYeter + yeter60plus;
+      const totalGamar = adjGamar + gamar60plus;
+      ageYeterDays = Math.min(ageI60, totalYeter);
+      ageGamarDays = Math.min(ageI60 - ageYeterDays, totalGamar);
+      ageExemptExtra = (ageI59 * 133.33) + (ageYeterDays * 93.33) + (ageGamarDays * 73.33);
+    }
+
     const mainPayment = z === 0 ? 0 : (diffPayment031 + specialBonus + above60Payment);
-    const finalGrand  = Math.round((mainPayment + additionalBonus + commanderExtra) * 100) / 100;
+    const finalGrand  = Math.round((mainPayment + additionalBonus + commanderExtra + ageExemptExtra) * 100) / 100;
 
     document.getElementById('row-used-other').style.display   = yeter3260   > 0 ? 'flex' : 'none';
     document.getElementById('row-used-gamar').style.display   = gamar3260   > 0 ? 'flex' : 'none';
@@ -937,6 +980,21 @@
       document.getElementById('r-commander-extra').textContent        = fmt(commanderExtra);
     }
 
+    // תוספת מוחרג גיל — DOM
+    const showAge = isAgeExempt && ageExemptExtra > 0;
+    document.getElementById('row-age-i59-days').style.display   = showAge ? 'flex' : 'none';
+    document.getElementById('row-age-i60-days').style.display   = showAge ? 'flex' : 'none';
+    document.getElementById('row-age-yeter-days').style.display = showAge ? 'flex' : 'none';
+    document.getElementById('row-age-gamar-days').style.display = showAge ? 'flex' : 'none';
+    document.getElementById('row-age-extra').style.display      = showAge ? 'flex' : 'none';
+    if (showAge) {
+      document.getElementById('r-age-i59-days').textContent   = ageI59;
+      document.getElementById('r-age-i60-days').textContent   = ageI60;
+      document.getElementById('r-age-yeter-days').textContent = ageYeterDays;
+      document.getElementById('r-age-gamar-days').textContent = ageGamarDays;
+      document.getElementById('r-age-extra').textContent      = fmt(ageExemptExtra);
+    }
+
     // Apply visibility based on mode (client mode hides internal calculations)
     if (appConfig.mode === 'client') {
       // Hide debug/intermediate calculation rows in client mode
@@ -954,7 +1012,6 @@
       document.getElementById('row-remain-other').style.display = 'none';
       document.getElementById('row-remain-gamar').style.display = 'none';
       document.getElementById('row-remain-fighter').style.display = 'none';
-      document.getElementById('row-diff-payment').style.display = 'none';
       document.getElementById('row-diff-fighter').style.display = 'none';
       document.getElementById('row-diff-gamar').style.display = 'none';
       document.getElementById('row-diff-other').style.display = 'none';
@@ -966,6 +1023,11 @@
       document.getElementById('row-commander-routine-pay').style.display  = 'none';
       document.getElementById('row-commander-gamar-pay').style.display    = 'none';
       document.getElementById('row-commander-yeter-pay').style.display    = 'none';
+      // מוחרג גיל — פירוט נסתר ב-client
+      document.getElementById('row-age-i59-days').style.display   = 'none';
+      document.getElementById('row-age-i60-days').style.display   = 'none';
+      document.getElementById('row-age-yeter-days').style.display = 'none';
+      document.getElementById('row-age-gamar-days').style.display = 'none';
     } else {
       // In test mode, show all rows (restore visibility if it was hidden before)
       document.getElementById('row-opt1').style.display = 'flex';
