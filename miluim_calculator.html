@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>מחשבון מילואים</title>
+  <title>מחשבון תגמולים</title>
   <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&display=swap" rel="stylesheet"/>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -37,7 +37,11 @@
     }
 
     /* placeholder so title stays centered */
-    .nav-spacer { width: 48px; }
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
 
     /* ===== HERO ===== */
     .page-hero {
@@ -301,6 +305,21 @@
     }
     .btn-calc:hover { background: #0d47a1; }
 
+    .btn-reset {
+      width: 100%;
+      background: transparent;
+      color: #1565c0;
+      border: 2px solid #1565c0;
+      border-radius: 50px;
+      padding: 11px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      margin-top: 8px;
+    }
+    .btn-reset:hover { background: #eef4fb; }
+
     /* ===== SPECIAL RULES ===== */
     .special-rules-card {
       background: #fff7e6;
@@ -419,6 +438,7 @@
 
       .result-row { font-size: 12px; }
       .result-total { font-size: 15px; }
+      .btn-reset { font-size: 14px; padding: 10px; }
     }
   </style>
 </head>
@@ -429,8 +449,11 @@
   <div class="nav-right">
     <img class="logo-img" src="/static/logo.png" alt="לוגו צה״ל" />
   </div>
-  <div class="nav-center">מחשבון מילואים</div>
-  <div class="nav-spacer"></div>
+  <div class="nav-center">מחשבון תגמולים</div>
+  <div class="nav-left">
+    <img class="logo-img" src="/static/תג.jpeg" alt="תג" />
+    <img class="logo-img" src="/static/יחידה.jpeg" alt="סמל יחידה" />
+  </div>
 </nav>
 
 <!-- ===== HERO + CALCULATOR ===== -->
@@ -449,7 +472,7 @@
         <div class="year-header">
           <label class="year-checkbox" for="year-2023-checkbox">
             <input type="checkbox" id="year-2023-checkbox" onchange="toggleYearSection('2023')" />
-            <span>תסמן אם עשית מילואים ב-2023</span>
+            <span>סמן אם עשית מילואים ב-2023</span>
           </label>
         </div>
         <div class="year-details" id="year-2023-details">
@@ -471,7 +494,7 @@
         <div class="year-header">
           <label class="year-checkbox" for="year-2024-checkbox">
             <input type="checkbox" id="year-2024-checkbox" onchange="toggleYearSection('2024')" />
-            <span>תסמן אם עשית מילואים ב-2024</span>
+            <span>סמן אם עשית מילואים ב-2024</span>
           </label>
         </div>
         <div class="year-details" id="year-2024-details">
@@ -493,7 +516,7 @@
         <div class="year-header">
           <label class="year-checkbox" for="year-2025-checkbox">
             <input type="checkbox" id="year-2025-checkbox" onchange="toggleYearSection('2025')" />
-            <span>תסמן אם עשית מילואים ב-2025</span>
+            <span>סמן אם עשית מילואים ב-2025</span>
           </label>
         </div>
         <div class="year-details" id="year-2025-details">
@@ -512,7 +535,7 @@
             <input type="number" id="combat-gamar-2025" min="0" step="0.5" value="0" oninput="updateYearTotal('2025')" />
           </div>
           <div class="other-group form-group">
-            <label>כמות ימי מילואים במערך יתר</label>
+            <label>כמות ימי מילואים במערך עורפי</label>
             <input type="number" id="combat-other-2025" min="0" step="0.5" value="0" oninput="updateYearTotal('2025')" />
           </div>
           <div class="radio-group-2025">
@@ -544,6 +567,7 @@
     </div>
 
     <button class="btn-calc" onclick="calculate()">חשב זכאויות</button>
+    <button class="btn-reset" onclick="resetCalculator()">איפוס מחשבון</button>
 
     <div class="result-area" id="results">
       <h3>תוצאות החישוב</h3>
@@ -616,15 +640,15 @@
       </div>
       <!-- סכומים -->
       <div class="result-row" id="row-diff-payment">
-        <span class="label">תשלום דיפרנציאלי (עד 31)</span>
+        <span class="label">תגמול מיוחד עד היום ה-31</span>
         <span class="value" id="r-diff-payment">—</span>
       </div>
       <div class="result-row" id="row-special-bonus">
-        <span class="label">תגמול 32-60</span>
+        <span class="label">תגמול מיוחד בין היום ה-32 ליום ה-60</span>
         <span class="value" id="r-special-bonus">—</span>
       </div>
       <div class="result-row" id="row-above-60-payment">
-        <span class="label">תשלום מעל 60</span>
+        <span class="label">תגמול מיוחד מעל היום ה-60</span>
         <span class="value" id="r-above-60-payment">—</span>
       </div>
       <!-- תוספת מפקד לוחם -->
@@ -653,7 +677,7 @@
         <span class="value" id="r-commander-yeter-pay">—</span>
       </div>
       <div class="result-row" id="row-commander-extra">
-        <span class="label">סה"כ תוספת מפקד לוחם</span>
+        <span class="label">תגמול מיוחד מעל היום ה-60 למפקדים</span>
         <span class="value" id="r-commander-extra">—</span>
       </div>
       <!-- מוחרג גיל -->
@@ -674,11 +698,11 @@
         <span class="value" id="r-age-gamar-days">—</span>
       </div>
       <div class="result-row" id="row-age-extra">
-        <span class="label">סה"כ תוספת מוחרג גיל</span>
+        <span class="label">תגמול מוחרגי גיל</span>
         <span class="value" id="r-age-extra">—</span>
       </div>
       <div class="result-row" id="row-additional-bonus">
-        <span class="label">תגמול נוסף ממס הכנסה לפי ימים</span>
+        <span class="label">תגמול נוסף מרשות המיסים</span>
         <span class="value" id="r-additional-bonus">—</span>
       </div>
       <!-- שורות debug -->
@@ -691,7 +715,7 @@
         <span class="value" id="r-days-payment-range">—</span>
       </div>
       <div class="result-total">
-        <span>סה״כ צה״ל+מס הכנסה (משוערת)</span>
+        <span>סה״כ מופ״ת+רשות המיסים (משוערת)</span>
         <span id="r-grand">—</span>
       </div>
     </div>
@@ -790,8 +814,41 @@
   }
 
   function toggleExtra2025(type, checked) {
-    const fieldId = type === 'commander' ? 'extra-field-commander-2025' : 'extra-field-age-exempt-2025';
-    document.getElementById(fieldId).style.display = checked ? 'block' : 'none';
+    const thisField  = type === 'commander' ? 'extra-field-commander-2025'  : 'extra-field-age-exempt-2025';
+    const otherCheck = type === 'commander' ? 'check-age-exempt-2025'       : 'check-commander-2025';
+    const otherField = type === 'commander' ? 'extra-field-age-exempt-2025' : 'extra-field-commander-2025';
+    const otherInput = type === 'commander' ? 'age-exempt-days-2025'        : 'commander-days-2025';
+
+    document.getElementById(thisField).style.display = checked ? 'block' : 'none';
+
+    if (checked) {
+      document.getElementById(otherCheck).checked = false;
+      document.getElementById(otherField).style.display = 'none';
+      document.getElementById(otherInput).value = '';
+    }
+  }
+
+  function resetCalculator() {
+    ['2023', '2024', '2025'].forEach(year => {
+      document.getElementById(`year-${year}-checkbox`).checked = false;
+      document.getElementById(`year-${year}-details`).classList.remove('visible');
+      document.getElementById(`routine-${year}`).value = 0;
+      document.getElementById(`combat-fighter-${year}`).value = 0;
+      const gamarEl = document.getElementById(`combat-gamar-${year}`);
+      if (gamarEl) gamarEl.value = 0;
+      const otherEl = document.getElementById(`combat-other-${year}`);
+      if (otherEl) otherEl.value = 0;
+      updateYearTotal(year);
+    });
+
+    document.getElementById('check-commander-2025').checked = false;
+    document.getElementById('check-age-exempt-2025').checked = false;
+    document.getElementById('extra-field-commander-2025').style.display = 'none';
+    document.getElementById('extra-field-age-exempt-2025').style.display = 'none';
+    document.getElementById('commander-days-2025').value = '';
+    document.getElementById('age-exempt-days-2025').value = '';
+
+    document.getElementById('results').classList.remove('visible');
   }
 
   function calculate() {
@@ -935,7 +992,7 @@
     document.getElementById('row-diff-other').style.display     = yeter031   > 0 ? 'flex' : 'none';
     document.getElementById('row-routine-in-3260').style.display = routine3260 > 0 ? 'flex' : 'none';
     document.getElementById('row-above-60-payment').style.display = above60Payment > 0 ? 'flex' : 'none';
-    document.getElementById('row-above-60-payment').querySelector('.label').textContent = 'תשלום מעל 60';
+    document.getElementById('row-above-60-payment').querySelector('.label').textContent = 'תגמול מיוחד מעל היום ה-60';
     document.getElementById('r-above-60-payment').textContent = fmt(above60Payment);
 
     document.getElementById('r-opt1').textContent = opt1;
