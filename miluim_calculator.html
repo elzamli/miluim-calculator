@@ -124,6 +124,11 @@
     .form-group input:focus,
     .form-group select:focus { border-color: #1565c0; }
 
+    /* הסתרת חצי ספינר בשדות מספר */
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+    input[type="number"] { -moz-appearance: textfield; appearance: textfield; }
+
     .year-panel {
       display: grid;
       gap: 16px;
@@ -587,11 +592,11 @@
           <div class="emergency-heading">חירום (צו 8)</div>
           <div class="routine-group form-group">
             <label>כמות ימי מילואים בשגרה</label>
-            <input type="number" id="routine-2023" min="0" step="0.5" value="0" oninput="updateYearTotal('2023')" />
+            <input type="number" id="routine-2023" min="0" step="0.5" oninput="updateYearTotal('2023')" />
           </div>
           <div class="fighter-group form-group">
             <label>כמות ימי מילואים בחירום (צו 8)</label>
-            <input type="number" id="combat-fighter-2023" min="0" step="0.5" value="0" oninput="updateYearTotal('2023')" />
+            <input type="number" id="combat-fighter-2023" min="0" step="0.5" oninput="updateYearTotal('2023')" />
           </div>
           <div class="year-total">סה"כ 2023: <span id="year-total-2023">0</span> ימים</div>
         </div>
@@ -609,11 +614,11 @@
           <div class="emergency-heading">חירום (צו 8)</div>
           <div class="routine-group form-group">
             <label>כמות ימי מילואים בשגרה</label>
-            <input type="number" id="routine-2024" min="0" step="0.5" value="0" oninput="updateYearTotal('2024')" />
+            <input type="number" id="routine-2024" min="0" step="0.5" oninput="updateYearTotal('2024')" />
           </div>
           <div class="fighter-group form-group">
             <label>כמות ימי מילואים בחירום (צו 8)</label>
-            <input type="number" id="combat-fighter-2024" min="0" step="0.5" value="0" oninput="updateYearTotal('2024')" />
+            <input type="number" id="combat-fighter-2024" min="0" step="0.5" oninput="updateYearTotal('2024')" />
           </div>
           <div class="year-total">סה"כ 2024: <span id="year-total-2024">0</span> ימים</div>
         </div>
@@ -631,19 +636,19 @@
           <div class="emergency-heading">חירום (צו 8)</div>
           <div class="routine-group form-group">
             <label>כמות ימי מילואים בשגרה</label>
-            <input type="number" id="routine-2025" min="0" step="0.5" value="0" oninput="updateYearTotal('2025')" />
+            <input type="number" id="routine-2025" min="0" step="0.5" oninput="updateYearTotal('2025')" />
           </div>
           <div class="fighter-group form-group">
             <label>כמות ימי מילואים במערך הלוחם</label>
-            <input type="number" id="combat-fighter-2025" min="0" step="0.5" value="0" oninput="updateYearTotal('2025')" />
+            <input type="number" id="combat-fighter-2025" min="0" step="0.5" oninput="updateYearTotal('2025')" />
           </div>
           <div class="gamar-group form-group">
             <label>כמות ימי מילואים במערך הגמ"ר</label>
-            <input type="number" id="combat-gamar-2025" min="0" step="0.5" value="0" oninput="updateYearTotal('2025')" />
+            <input type="number" id="combat-gamar-2025" min="0" step="0.5" oninput="updateYearTotal('2025')" />
           </div>
           <div class="other-group form-group">
             <label>כמות ימי מילואים במערך עורפי</label>
-            <input type="number" id="combat-other-2025" min="0" step="0.5" value="0" oninput="updateYearTotal('2025')" />
+            <input type="number" id="combat-other-2025" min="0" step="0.5" oninput="updateYearTotal('2025')" />
           </div>
           <div style="grid-column: 1 / -1; font-size: 16px; color: #1b2f6e; font-weight: 700; margin-top: 4px;">סמנ/י אם אחד הקריטריונים רלוונטים לגביך</div>
           <div class="radio-group-2025">
@@ -1094,11 +1099,13 @@
       const I55 = (other25 - adjYeter) + (gamar25 - adjGamar) + (fighter25 - adjFighter);
       ageI59 = Math.min(I53, I54 + I55);
       ageI60 = Math.max(0, I53 - ageI59);
-      const totalYeter = adjYeter + yeter60plus;
-      const totalGamar = adjGamar + gamar60plus;
+      const totalYeter = yeter031 + yeter60plus;
+      const totalGamar = gamar031 + gamar60plus;
       ageYeterDays = Math.min(ageI60, totalYeter);
       ageGamarDays = Math.min(ageI60 - ageYeterDays, totalGamar);
-      ageExemptExtra = (ageI59 * 133.33) + (ageYeterDays * 93.33) + (ageGamarDays * 73.33);
+      // חוק מוחרג גיל כפל — ימי 32–60 שולמו בחישוב הרגיל, משולמים שנית למוחרג גיל
+      const ageDoubleBonus = days3260 * 133.33;
+      ageExemptExtra = (ageI59 * 133.33) + (ageYeterDays * 93.33) + (ageGamarDays * 73.33) + ageDoubleBonus;
     }
 
     const mainPayment = diffPayment031 + specialBonus + above60Payment;
