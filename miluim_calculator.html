@@ -993,6 +993,41 @@
       return;
     }
 
+    // ולידציה — אין שדה שיעלה על 365
+    const fieldsToValidate = [
+      { id: 'routine-2023',          label: 'שגרה 2023' },
+      { id: 'combat-fighter-2023',   label: 'חירום 2023' },
+      { id: 'routine-2024',          label: 'שגרה 2024' },
+      { id: 'combat-fighter-2024',   label: 'חירום 2024' },
+      { id: 'routine-2025',          label: 'שגרה 2025' },
+      { id: 'combat-fighter-2025',   label: 'חירום לוחם 2025' },
+      { id: 'combat-gamar-2025',     label: 'חירום גמ"ר 2025' },
+      { id: 'combat-other-2025',     label: 'חירום עורפי 2025' },
+      { id: 'commander-days-2025',   label: 'ימי מפקד לוחם' },
+      { id: 'age-exempt-days-2025',  label: 'ימי מוחרג גיל' },
+    ];
+    for (const f of fieldsToValidate) {
+      const val = parseFloat(document.getElementById(f.id).value);
+      if (!isNaN(val) && val > 365) {
+        alert(`הערך בשדה "${f.label}" (${val}) עולה על 365 ימים — אנא בדוק את הנתונים`);
+        return;
+      }
+    }
+
+    // ולידציה — סה"כ ימים לשנה לא יעלה על 365
+    const yearTotals = [
+      { year: '2023', ids: ['routine-2023', 'combat-fighter-2023'] },
+      { year: '2024', ids: ['routine-2024', 'combat-fighter-2024'] },
+      { year: '2025', ids: ['routine-2025', 'combat-fighter-2025', 'combat-gamar-2025', 'combat-other-2025'] },
+    ];
+    for (const yt of yearTotals) {
+      const sum = yt.ids.reduce((acc, id) => acc + (parseFloat(document.getElementById(id).value) || 0), 0);
+      if (sum > 365) {
+        alert(`סה"כ הימים לשנת ${yt.year} (${sum}) עולה על 365 — אנא בדוק את הנתונים`);
+        return;
+      }
+    }
+
     const dailyBase = Math.max(salary > 0 ? Math.round(salary / WORKING_DAYS_PER_MONTH) : 0, MIN_DAILY[rank]);
     const total = dailyBase * totalDays;
     let bonus = 0;
@@ -1105,7 +1140,10 @@
       ageGamarDays = Math.min(ageI60 - ageYeterDays, totalGamar);
       // חוק מוחרג גיל כפל — ימי 32–60 שולמו בחישוב הרגיל, משולמים שנית למוחרג גיל
       const ageDoubleBonus = days3260 * 133.33;
-      ageExemptExtra = (ageI59 * 133.33) + (ageYeterDays * 93.33) + (ageGamarDays * 73.33) + ageDoubleBonus;
+      // ימי שגרה 61–180 × 133.33 (תקציב שנותר אחרי ימי חירום z)
+      const routineAbove60 = Math.max(0, Math.min(routineRaw, 180) - 60);
+      const routineAgeExempt = Math.min(routineAbove60, Math.max(0, ageExemptDays - z));
+      ageExemptExtra = (ageI59 * 133.33) + (ageYeterDays * 93.33) + (ageGamarDays * 73.33) + ageDoubleBonus + (routineAgeExempt * 133.33);
     }
 
     const mainPayment = diffPayment031 + specialBonus + above60Payment;
