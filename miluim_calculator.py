@@ -160,6 +160,8 @@ def calculate_benefits(inp: MiluimInput) -> MiluimResult:
 # Flask API (אופציונלי – הרץ ישירות לבדיקה)
 # ─────────────────────────────────────────────
 
+from datetime import datetime
+
 def create_flask_app():
     """
     יוצר אפליקציית Flask עם endpoint אחד: POST /calculate
@@ -206,6 +208,19 @@ def create_flask_app():
             return jsonify({"ok": True, "result": result.as_dict()})
         except (ValueError, KeyError) as e:
             return jsonify({"ok": False, "error": str(e)}), 400
+
+    @app.route("/log", methods=["POST"])
+    def api_log():
+        data = request.get_json(force=True)
+        print(
+            f"[LOG] {datetime.now().isoformat()} | "
+            f"grand={data.get('grand_total')} | "
+            f"mofet={data.get('mofet_total')} | "
+            f"tax={data.get('tax_total')} | "
+            f"inputs={data}",
+            flush=True,
+        )
+        return jsonify({"ok": True})
 
     return app
 

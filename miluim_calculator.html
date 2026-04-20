@@ -1101,7 +1101,7 @@
       ageExemptExtra = (ageI59 * 133.33) + (ageYeterDays * 93.33) + (ageGamarDays * 73.33);
     }
 
-    const mainPayment = z === 0 ? 0 : (diffPayment031 + specialBonus + above60Payment);
+    const mainPayment = diffPayment031 + specialBonus + above60Payment;
     const finalGrand  = Math.round((mainPayment + additionalBonus + commanderExtra + ageExemptExtra) * 100) / 100;
 
     document.getElementById('row-used-other').style.display   = yeter3260   > 0 ? 'flex' : 'none';
@@ -1243,6 +1243,29 @@
       document.getElementById('row-days-payment').style.display = 'flex';
       document.getElementById('row-days-payment-range').style.display = 'flex';
     }
+
+    // שליחת לוג async — fire and forget
+    fetch('/log', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        routine_2023:    parseFloat(document.getElementById('routine-2023').value) || 0,
+        fighter_2023:    parseFloat(document.getElementById('combat-fighter-2023').value) || 0,
+        routine_2024:    parseFloat(document.getElementById('routine-2024').value) || 0,
+        fighter_2024:    parseFloat(document.getElementById('combat-fighter-2024').value) || 0,
+        routine_2025:    routineRaw,
+        fighter_2025:    fighter25,
+        gamar_2025:      gamar25,
+        other_2025:      other25,
+        commander:       isCommander ? 1 : 0,
+        commander_days:  isCommander ? commanderDays : 0,
+        age_exempt:      isAgeExempt ? 1 : 0,
+        age_exempt_days: isAgeExempt ? ageExemptDays : 0,
+        mofet_total:     mofetTotal,
+        tax_total:       additionalBonus,
+        grand_total:     finalGrand
+      })
+    }).catch(() => {});
 
     const res = document.getElementById('results');
     res.classList.add('visible');
