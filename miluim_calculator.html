@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>מחשבון תגמולים</title>
+  <title>מחשבון תגמולים 2025</title>
   <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&display=swap" rel="stylesheet"/>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -42,6 +42,7 @@
       align-items: center;
       gap: 12px;
     }
+
 
     /* ===== HERO ===== */
     .page-hero {
@@ -378,6 +379,18 @@
     .result-row .label { color: #555; }
     .result-row .value { font-weight: 700; color: #1565c0; }
 
+    .result-row-indented .value { padding-left: 22px; }
+
+    .result-row-subtotal {
+      display: flex;
+      justify-content: space-between;
+      padding: 9px 0 5px;
+      border-bottom: 1px solid #c8ddf5;
+      font-size: 14px;
+    }
+    .result-row-subtotal .label { color: #1b2f6e; font-weight: 700; }
+    .result-row-subtotal .value { font-weight: 700; color: #1565c0; font-size: 14px; }
+
     .result-total {
       display: flex;
       justify-content: space-between;
@@ -439,20 +452,114 @@
       .result-row { font-size: 12px; }
       .result-total { font-size: 15px; }
       .btn-reset { font-size: 14px; padding: 10px; }
+      .modal-box { margin: 16px; padding: 28px 20px 24px; }
+      .modal-box h2 { font-size: 18px; }
     }
+
+    /* ===== MODAL ===== */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 20, 60, 0.75);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-box {
+      background: white;
+      border-radius: 16px;
+      padding: 40px 44px 36px;
+      max-width: 560px;
+      width: 100%;
+      margin: 24px;
+      direction: rtl;
+      text-align: right;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.3);
+    }
+
+    .modal-box h2 {
+      font-size: 22px;
+      font-weight: 700;
+      color: #1b2f6e;
+      margin-bottom: 16px;
+    }
+
+    .modal-box p {
+      font-size: 14px;
+      color: #333;
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .modal-divider {
+      border: none;
+      border-top: 1px solid #c8ddf5;
+      margin: 18px 0;
+    }
+
+    .modal-disclaimer {
+      font-size: 13px;
+      color: #222;
+      font-weight: 700;
+      line-height: 1.7;
+    }
+
+    .modal-disclaimer-title {
+      font-weight: 700;
+      text-decoration: underline;
+      display: block;
+      margin-bottom: 6px;
+      font-size: 14px;
+      color: #1b2f6e;
+    }
+
+    .btn-confirm {
+      width: 100%;
+      background: #1565c0;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 13px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: inherit;
+      margin-top: 24px;
+    }
+    .btn-confirm:hover { background: #0d47a1; }
   </style>
 </head>
 <body>
 
+<!-- ===== MODAL ===== -->
+<div class="modal-overlay" id="welcome-modal">
+  <div class="modal-box">
+    <h2>אוכלוסיית מילואים יקרה</h2>
+    <p>
+      אנו מבקשים להביע את הערכתנו העמוקה על תרומתכם המשמעותית לביטחון המדינה ולחוסנה.<br><br>
+      מחשבון זה נועד לשקף את היקף התגמולים בגין שירות המילואים בשנת 2025, לרבות התגמול המיוחד, התגמול הנוסף ומוחרגי גיל, כביטוי להוקרה על מחויבותכם, מסירותכם ותרומתכם המתמשכת.
+    </p>
+    <hr class="modal-divider" />
+    <div class="modal-disclaimer">
+      <span class="modal-disclaimer-title">הבהרה:</span>
+      החישוב המוצג במחשבון זה הינו אומדן בלבד, המבוסס על נתונים והנחות כלליות, ואינו מהווה התחייבות או קביעה מחייבת לגבי סכום התגמול הסופי.<br><br>
+      התגמול בפועל ייקבע בהתאם לנתוני הזכאות האישיים, כפי שייקלטו ויאושרו על ידי הגורמים המוסמכים בצה״ל וברשות המסים.
+    </div>
+    <button class="btn-confirm" onclick="closeModal()">מאשר/ת</button>
+  </div>
+</div>
+
 <!-- ===== NAVBAR ===== -->
 <nav class="navbar">
   <div class="nav-right">
-    <img class="logo-img" src="/static/logo.png" alt="לוגו צה״ל" />
+    <img class="logo-img" src="/static/logo_new.png" alt="לוגו צה״ל" />
   </div>
-  <div class="nav-center">מחשבון תגמולים</div>
+  <div class="nav-center">מחשבון תגמולים 2025</div>
   <div class="nav-left">
-    <img class="logo-img" src="/static/תג.jpeg" alt="תג" />
-    <img class="logo-img" src="/static/יחידה.jpeg" alt="סמל יחידה" />
+    <img class="logo-img" src="/static/תג.png" alt="תג" />
+    <img class="logo-img" src="/static/יחידה.png" alt="סמל יחידה" />
   </div>
 </nav>
 
@@ -464,7 +571,7 @@
   <div class="hero-circle c4"></div>
 
   <div class="hero-card">
-    <h1>מחשבון זכאויות מילואים 2025</h1>
+    <h1>מחשבון תגמולים 2025</h1>
     <div class="hero-underline"></div>
 
     <div class="year-panel">
@@ -472,18 +579,18 @@
         <div class="year-header">
           <label class="year-checkbox" for="year-2023-checkbox">
             <input type="checkbox" id="year-2023-checkbox" onchange="toggleYearSection('2023')" />
-            <span>סמן אם עשית מילואים ב-2023</span>
+            <span>סמנ/י אם עשית מילואים ב-2023</span>
           </label>
         </div>
         <div class="year-details" id="year-2023-details">
           <div class="routine-heading">שגרה</div>
-          <div class="emergency-heading">חירום</div>
+          <div class="emergency-heading">חירום (צו 8)</div>
           <div class="routine-group form-group">
             <label>כמות ימי מילואים בשגרה</label>
             <input type="number" id="routine-2023" min="0" step="0.5" value="0" oninput="updateYearTotal('2023')" />
           </div>
           <div class="fighter-group form-group">
-            <label>כמות ימי מילואים בחירום</label>
+            <label>כמות ימי מילואים בחירום (צו 8)</label>
             <input type="number" id="combat-fighter-2023" min="0" step="0.5" value="0" oninput="updateYearTotal('2023')" />
           </div>
           <div class="year-total">סה"כ 2023: <span id="year-total-2023">0</span> ימים</div>
@@ -494,18 +601,18 @@
         <div class="year-header">
           <label class="year-checkbox" for="year-2024-checkbox">
             <input type="checkbox" id="year-2024-checkbox" onchange="toggleYearSection('2024')" />
-            <span>סמן אם עשית מילואים ב-2024</span>
+            <span>סמנ/י אם עשית מילואים ב-2024</span>
           </label>
         </div>
         <div class="year-details" id="year-2024-details">
           <div class="routine-heading">שגרה</div>
-          <div class="emergency-heading">חירום</div>
+          <div class="emergency-heading">חירום (צו 8)</div>
           <div class="routine-group form-group">
             <label>כמות ימי מילואים בשגרה</label>
             <input type="number" id="routine-2024" min="0" step="0.5" value="0" oninput="updateYearTotal('2024')" />
           </div>
           <div class="fighter-group form-group">
-            <label>כמות ימי מילואים בחירום</label>
+            <label>כמות ימי מילואים בחירום (צו 8)</label>
             <input type="number" id="combat-fighter-2024" min="0" step="0.5" value="0" oninput="updateYearTotal('2024')" />
           </div>
           <div class="year-total">סה"כ 2024: <span id="year-total-2024">0</span> ימים</div>
@@ -516,12 +623,12 @@
         <div class="year-header">
           <label class="year-checkbox" for="year-2025-checkbox">
             <input type="checkbox" id="year-2025-checkbox" onchange="toggleYearSection('2025')" />
-            <span>סמן אם עשית מילואים ב-2025</span>
+            <span>סמנ/י אם עשית מילואים ב-2025</span>
           </label>
         </div>
         <div class="year-details" id="year-2025-details">
           <div class="routine-heading">שגרה</div>
-          <div class="emergency-heading">חירום</div>
+          <div class="emergency-heading">חירום (צו 8)</div>
           <div class="routine-group form-group">
             <label>כמות ימי מילואים בשגרה</label>
             <input type="number" id="routine-2025" min="0" step="0.5" value="0" oninput="updateYearTotal('2025')" />
@@ -538,10 +645,11 @@
             <label>כמות ימי מילואים במערך עורפי</label>
             <input type="number" id="combat-other-2025" min="0" step="0.5" value="0" oninput="updateYearTotal('2025')" />
           </div>
+          <div style="grid-column: 1 / -1; font-size: 16px; color: #1b2f6e; font-weight: 700; margin-top: 4px;">סמנ/י אם אחד הקריטריונים רלוונטים לגביך</div>
           <div class="radio-group-2025">
             <label>
               <input type="checkbox" id="check-commander-2025" onchange="toggleExtra2025('commander', this.checked)" />
-              קצין מפקד לוחם
+              מפקד/ת מילואים פעיל/ה (שמוגדר במדרג הפיקודי)
             </label>
             <label>
               <input type="checkbox" id="check-age-exempt-2025" onchange="toggleExtra2025('age-exempt', this.checked)" />
@@ -549,7 +657,7 @@
             </label>
           </div>
           <div id="extra-field-commander-2025" class="extra-field-2025 form-group" style="display:none;">
-            <label>כמות ימים כקצין מפקד לוחם</label>
+            <label>אנא הזן במדויק את כמות הימים כמפקד מילואים פעיל</label>
             <input type="number" id="commander-days-2025" min="0" step="0.5" placeholder="כל הימים (ברירת מחדל)" />
           </div>
           <div id="extra-field-age-exempt-2025" class="extra-field-2025 form-group" style="display:none;">
@@ -701,9 +809,17 @@
         <span class="label">תגמול מוחרגי גיל</span>
         <span class="value" id="r-age-extra">—</span>
       </div>
+      <div class="result-row result-row-subtotal" id="row-subtotal-mofet" style="display:none">
+        <span class="label">סה"כ מופת</span>
+        <span class="value" id="r-subtotal-mofet">—</span>
+      </div>
       <div class="result-row" id="row-additional-bonus">
         <span class="label">תגמול נוסף מרשות המיסים</span>
         <span class="value" id="r-additional-bonus">—</span>
+      </div>
+      <div class="result-row result-row-subtotal" id="row-subtotal-misim" style="display:none">
+        <span class="label">סה"כ רשות המיסים</span>
+        <span class="value" id="r-subtotal-misim">—</span>
       </div>
       <!-- שורות debug -->
       <div class="result-row" id="row-days-payment">
@@ -715,7 +831,7 @@
         <span class="value" id="r-days-payment-range">—</span>
       </div>
       <div class="result-total">
-        <span>סה״כ מופ״ת+רשות המיסים (משוערת)</span>
+        <span>סה״כ מופת+רשות המיסים (משוערת)</span>
         <span id="r-grand">—</span>
       </div>
     </div>
@@ -723,10 +839,19 @@
 </div>
 
 <div class="footer">
-  © 2025 צבא ההגנה לישראל – כל הזכויות שמורות | החישוב הוא הערכה בלבד ואינו מחייב
+  המחשבון פותח ביוזמת עתכ״א מילואים ומחלקת המילואים באגף כוח האדם, מתוך מטרה להנגיש מידע ולסייע בהבנת זכויותיכם. | החישוב הוא הערכה בלבד ואינו מחייב
 </div>
 
 <script>
+  function closeModal() {
+    document.getElementById('welcome-modal').style.display = 'none';
+  }
+
+  // מניעת סגירה בלחיצה מחוץ ל-modal
+  document.getElementById('welcome-modal').addEventListener('click', function(e) {
+    e.stopPropagation();
+  });
+
   const WORKING_DAYS_PER_MONTH = 22;
   const MIN_DAILY = { soldier: 300, nco: 420, officer: 550 };
   const COMBAT_BONUS = { long: 3000, short: 1500, min_long: 30, min_short: 14 };
@@ -859,7 +984,7 @@
     const rank = 'soldier';
 
     if (totalDays === 0) {
-      alert('אנא בחר שנה והזן לפחות יום שגרה או חירום');
+      alert('אנא בחר שנה והזן לפחות יום שגרה או חירום (צו 8)');
       return;
     }
 
@@ -964,7 +1089,7 @@
     let ageExemptExtra = 0;
     let ageI59 = 0, ageI60 = 0, ageYeterDays = 0, ageGamarDays = 0;
     if (isAgeExempt && ageExemptDays > 0) {
-      const I53 = Math.min(ageExemptDays, 180);
+      const I53 = ageExemptDays;
       const I54 = Math.min(31, routineRaw);
       const I55 = (other25 - adjYeter) + (gamar25 - adjGamar) + (fighter25 - adjFighter);
       ageI59 = Math.min(I53, I54 + I55);
@@ -1053,6 +1178,28 @@
       document.getElementById('r-age-extra').textContent      = fmt(ageExemptExtra);
     }
 
+    // indent לשורות הבודדות — בכל מצב
+    ['row-diff-payment','row-special-bonus','row-above-60-payment',
+     'row-commander-extra','row-age-extra','row-additional-bonus'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.classList.add('result-row-indented');
+    });
+
+    // סה"כ מופת + סה"כ רשות המיסים — מוצגים בכל מצב
+    const mofetTotal = Math.round((mainPayment + commanderExtra + ageExemptExtra) * 100) / 100;
+    if (mofetTotal > 0) {
+      document.getElementById('row-subtotal-mofet').style.display = 'flex';
+      document.getElementById('r-subtotal-mofet').textContent = fmt(mofetTotal);
+    } else {
+      document.getElementById('row-subtotal-mofet').style.display = 'none';
+    }
+    if (additionalBonus > 0) {
+      document.getElementById('row-subtotal-misim').style.display = 'flex';
+      document.getElementById('r-subtotal-misim').textContent = fmt(additionalBonus);
+    } else {
+      document.getElementById('row-subtotal-misim').style.display = 'none';
+    }
+
     // Apply visibility based on mode (client mode hides internal calculations)
     if (appConfig.mode === 'client') {
       // Hide debug/intermediate calculation rows in client mode
@@ -1086,7 +1233,9 @@
       document.getElementById('row-age-i60-days').style.display   = 'none';
       document.getElementById('row-age-yeter-days').style.display = 'none';
       document.getElementById('row-age-gamar-days').style.display = 'none';
+
     } else {
+
       // In test mode, show all rows (restore visibility if it was hidden before)
       document.getElementById('row-opt1').style.display = 'flex';
       document.getElementById('row-opt2').style.display = 'flex';
