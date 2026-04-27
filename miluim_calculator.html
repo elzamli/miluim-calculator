@@ -257,9 +257,8 @@
     .radio-group-2025 {
       grid-column: 1 / -1;
       display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-      align-items: center;
+      flex-direction: column;
+      gap: 10px;
       margin-top: 4px;
     }
 
@@ -668,22 +667,26 @@
           </div>
           <div style="grid-column: 1 / -1; font-size: 16px; color: #1b2f6e; font-weight: 700; margin-top: 4px;">סמנ/י אם אחד הקריטריונים רלוונטים לגביך</div>
           <div class="radio-group-2025">
-            <label>
-              <input type="checkbox" id="check-commander-2025" onchange="toggleExtra2025('commander', this.checked)" />
-              מפקד/ת מילואים פעיל/ה (שמוגדר במדרג הפיקודי)
-            </label>
-            <label>
-              <input type="checkbox" id="check-age-exempt-2025" onchange="toggleExtra2025('age-exempt', this.checked)" />
-              מוחרגי גיל (משרתי מילואים בעלי אפיון מוחרגי גיל ע"פ צו המקצועות בצו שירות ביטחון)
-            </label>
-          </div>
-          <div id="extra-field-commander-2025" class="extra-field-2025 form-group" style="display:none;">
-            <label>אנא הזן במדויק את כמות הימים כמפקד מילואים פעיל</label>
-            <input type="number" id="commander-days-2025" min="0" step="0.5" placeholder="כל הימים (ברירת מחדל)" />
-          </div>
-          <div id="extra-field-age-exempt-2025" class="extra-field-2025 form-group" style="display:none;">
-            <label>כמות ימים כמוחרג גיל</label>
-            <input type="number" id="age-exempt-days-2025" min="0" step="0.5" placeholder="כל ימי 2025 (ברירת מחדל)" />
+            <div>
+              <label>
+                <input type="checkbox" id="check-commander-2025" onchange="toggleExtra2025('commander', this.checked)" />
+                מפקד/ת מילואים פעיל/ה (שמוגדר במדרג הפיקודי)
+              </label>
+              <div id="extra-field-commander-2025" class="extra-field-2025 form-group" style="display:none;">
+                <label>אנא הזן במדויק את כמות הימים כמפקד מילואים פעיל</label>
+                <input type="number" id="commander-days-2025" min="0" step="0.5" placeholder="כל הימים (ברירת מחדל)" />
+              </div>
+            </div>
+            <div>
+              <label>
+                <input type="checkbox" id="check-age-exempt-2025" onchange="toggleExtra2025('age-exempt', this.checked)" />
+                מוחרגי גיל (משרתי מילואים בעלי אפיון מוחרגי גיל ע"פ צו המקצועות בצו שירות ביטחון)
+              </label>
+              <div id="extra-field-age-exempt-2025" class="extra-field-2025 form-group" style="display:none;">
+                <label>כמות ימים כמוחרג גיל</label>
+                <input type="number" id="age-exempt-days-2025" min="0" step="0.5" placeholder="כל ימי 2025 (ברירת מחדל)" />
+              </div>
+            </div>
           </div>
           <div class="year-total">סה"כ 2025: <span id="year-total-2025">0</span> ימים</div>
         </div>
@@ -1135,6 +1138,7 @@
       const rem2 = rem1 - gamarCmd;
       yeterCmd   = Math.min(yeter60plus, rem2);
       commanderExtra = (routineCmd * 133.33) + (gamarCmd * 73.33) + (yeterCmd * 93.33);
+      commanderExtra += (gamar031 * 73.33) + (yeter031 * 93.33);
     }
 
     // תוספת מוחרג גיל
