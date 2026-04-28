@@ -209,6 +209,19 @@ def create_flask_app():
         except (ValueError, KeyError) as e:
             return jsonify({"ok": False, "error": str(e)}), 400
 
+    @app.after_request
+    def set_cache_headers(response):
+        path = request.path
+        if path.startswith('/static/') and path.lower().endswith(('.png', '.jpg', '.jpeg', '.svg', '.ico')) and response.status_code == 200:
+            response.headers['Cache-Control'] = 'public, max-age=604800'
+        elif path in ('/', '/config.json'):
+            response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+        return response
+
+    @app.route("/health")
+    def health():
+        return {"ok": True}, 200
+
     @app.route("/log", methods=["POST"])
     def api_log():
         data = request.get_json(force=True)
