@@ -235,6 +235,38 @@ def create_flask_app():
         )
         return jsonify({"ok": True})
 
+    @app.route("/nofesh")
+    def nofesh():
+        return send_from_directory(".", "nofesh.html")
+
+    @app.route("/nofesh1")
+    def nofesh1():
+        return send_from_directory(".", "nofesh1.html")
+
+    @app.route("/nofesh2")
+    def nofesh2():
+        return send_from_directory(".", "nofesh2.html")
+
+    @app.route("/s/<source>")
+    def short_link(source):
+        from flask import redirect
+        return redirect(f"/nofesh?utm_source={source}")
+
+    @app.route("/log-nofesh", methods=["POST"])
+    def api_log_nofesh():
+        data = request.get_json(force=True)
+        print(
+            f"[NOFESH] {datetime.now().isoformat()} | "
+            f"aleph_plus={data.get('aleph_plus', 0)} aleph={data.get('aleph', 0)} "
+            f"bet={data.get('bet', 0)} gimel={data.get('gimel', 0)} "
+            f"dalet={data.get('dalet', 0)} hey={data.get('hey', 0)} "
+            f"child={data.get('child', False)} | "
+            f"base={data.get('base_grade', '')} total={data.get('total', 0)} "
+            f"source={data.get('source', 'direct')}",
+            flush=True,
+        )
+        return jsonify({"ok": True})
+
     return app
 
 
