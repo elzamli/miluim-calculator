@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>מחשבון שובר נופש 2026 — Soft</title>
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700;800&family=Heebo:wght@500;700;800;900&display=swap" rel="stylesheet"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root{
+      --navy:#28456e; --navy-2:#35588a; --ink:#26303f; --muted:#6a7585;
+      --cyan:#1bb6c4; --cyan-deep:#0f97a6; --line:#e6e2d8; --bg:#f5f2ea;
+      --card:#ffffff; --soft:#f1ede4; --amber:#b8860b;
+    }
+    body { font-family:'Assistant','Segoe UI',Arial,sans-serif; direction:rtl; background:var(--bg); color:var(--ink); -webkit-font-smoothing:antialiased; }
+    a{ color:var(--cyan-deep); font-weight:600; text-decoration:none; }
+    a:hover{ text-decoration:underline; }
+
+    /* NAVBAR */
+    .navbar{ background:var(--navy); display:flex; align-items:center; justify-content:space-between; padding:0 28px; height:66px; gap:16px; }
+    .nav-center{ font-family:'Heebo',sans-serif; font-size:19px; font-weight:700; color:#fff; flex:1; text-align:center; letter-spacing:.2px; }
+    .logo-ph{ height:42px; min-width:42px; display:flex; align-items:center; justify-content:center; border:1px dashed rgba(255,255,255,.4); border-radius:8px; color:rgba(255,255,255,.6); font-size:10px; padding:0 8px; font-weight:600; }
+    .nav-left{ display:flex; gap:10px; }
+
+    /* HERO */
+    .page-hero{ position:relative; overflow:hidden; background:linear-gradient(160deg,#eef3ef,#e7eef0); padding:56px 24px 60px; display:flex; justify-content:center; }
+    .page-hero::after{ content:""; position:absolute; inset:0; background-image:linear-gradient(rgba(27,182,196,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(27,182,196,.07) 1px,transparent 1px); background-size:46px 46px; mask-image:radial-gradient(120% 90% at 70% 0%,#000,transparent 75%); }
+    .hero-sq{ position:absolute; background:rgba(27,182,196,.10); border:1px solid rgba(27,182,196,.14); border-radius:18px; }
+    .s1{ width:240px; height:240px; top:-70px; right:-50px; transform:rotate(12deg); }
+    .s2{ width:150px; height:150px; bottom:-40px; right:160px; transform:rotate(-8deg); background:rgba(27,182,196,.16); }
+    .s3{ width:120px; height:120px; top:60px; left:-30px; transform:rotate(18deg); }
+    .s4{ width:70px; height:70px; bottom:70px; left:230px; background:rgba(27,182,196,.18); transform:rotate(6deg); }
+
+    .hero-card{ position:relative; z-index:2; background:var(--card); border-radius:28px; width:100%; max-width:620px; box-shadow:0 30px 70px -25px rgba(8,20,50,.55); overflow:hidden; }
+    .hero-card::before{ content:""; display:block; height:5px; background:linear-gradient(90deg,var(--cyan),var(--navy-2)); }
+    .hc-pad{ padding:40px 44px 34px; }
+    .eyebrow{ display:inline-flex; align-items:center; gap:8px; font-size:12px; font-weight:700; letter-spacing:.12em; color:var(--cyan-deep); text-transform:uppercase; margin-bottom:14px; }
+    .eyebrow::before{ content:""; width:22px; height:2px; background:var(--cyan); border-radius:2px; }
+    h1.title{ font-family:'Heebo',sans-serif; font-size:30px; font-weight:800; color:var(--navy); line-height:1.15; margin-bottom:14px; }
+    .subtitle{ font-size:14px; color:var(--muted); line-height:1.65; margin-bottom:8px; }
+    .hero-note{ display:flex; gap:18px; flex-wrap:wrap; margin:18px 0 26px; }
+    .note-pill{ flex:1; min-width:200px; background:var(--soft); border:1px solid var(--line); border-radius:12px; padding:12px 14px; font-size:12.5px; color:var(--muted); line-height:1.55; }
+    .note-pill b{ color:var(--navy); }
+
+    /* SECTION */
+    .section-head{ display:flex; align-items:center; gap:12px; margin:0 0 16px; }
+    .step{ width:30px; height:30px; border-radius:50%; background:var(--navy); color:#fff; font-family:'Heebo',sans-serif; font-weight:800; font-size:14px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .section-head h3{ font-family:'Heebo',sans-serif; font-size:16px; font-weight:700; color:var(--navy); }
+    .section-head .hr{ flex:1; height:1px; background:var(--line); }
+
+    /* GRADE GRID */
+    .grade-grid{ display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:26px; }
+    .form-group{ background:var(--card); border:1.5px solid var(--line); border-radius:14px; padding:12px 14px; transition:border-color .15s, box-shadow .15s; }
+    .form-group:focus-within{ border-color:var(--cyan); box-shadow:0 0 0 4px rgba(27,182,196,.12); }
+    .fg-top{ display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+    .g-chip{ font-family:'Heebo',sans-serif; font-weight:800; font-size:13px; color:#fff; background:var(--navy-2); border-radius:7px; padding:3px 9px; min-width:34px; text-align:center; }
+    .form-group[data-top="1"] .g-chip{ background:var(--cyan-deep); }
+    .g-name{ font-size:12.5px; color:var(--muted); font-weight:600; }
+    .form-group input{ width:100%; border:none; outline:none; background:transparent; font-family:'Heebo',sans-serif; font-size:22px; font-weight:700; color:var(--ink); direction:rtl; }
+    .form-group input::placeholder{ color:#c2cbd8; font-weight:600; }
+    input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{ -webkit-appearance:none; margin:0; }
+    input[type=number]{ -moz-appearance:textfield; appearance:textfield; }
+
+    /* CHILD */
+    .child-panel{ background:var(--soft); border:1.5px solid var(--line); border-radius:14px; padding:14px 16px; margin-bottom:22px; }
+    .child-label{ display:flex; align-items:flex-start; gap:11px; cursor:pointer; font-size:13.5px; color:var(--ink); font-weight:600; line-height:1.5; }
+    .child-label input{ width:20px; height:20px; cursor:pointer; accent-color:var(--cyan-deep); flex-shrink:0; margin-top:1px; }
+
+    /* TOTAL */
+    .summary-row{ display:flex; justify-content:space-between; align-items:center; padding:16px 20px; background:linear-gradient(120deg,var(--navy),var(--navy-2)); border-radius:14px; color:#fff; margin-bottom:18px; }
+    .summary-row span:first-child{ font-weight:600; font-size:14px; opacity:.9; }
+    #total-days-display{ font-family:'Heebo',sans-serif; font-size:30px; font-weight:900; line-height:1; }
+    .sum-unit{ font-size:13px; font-weight:600; opacity:.75; margin-right:6px; }
+
+    /* BUTTONS */
+    .btn-calc{ width:100%; background:linear-gradient(120deg,var(--cyan),var(--cyan-deep)); color:#fff; border:none; border-radius:50px; padding:15px; font-size:16px; font-weight:800; font-family:'Heebo',sans-serif; cursor:pointer; box-shadow:0 12px 24px -10px rgba(0,145,179,.7); transition:transform .1s, box-shadow .15s; }
+    .btn-calc:hover{ transform:translateY(-1px); box-shadow:0 16px 30px -10px rgba(0,145,179,.8); }
+    .btn-calc:active{ transform:translateY(0); }
+    .btn-reset{ width:100%; background:transparent; color:var(--navy); border:1.5px solid var(--line); border-radius:50px; padding:12px; font-size:14px; font-weight:700; cursor:pointer; font-family:inherit; margin-top:10px; transition:background .15s,border-color .15s; }
+    .btn-reset:hover{ background:var(--soft); border-color:#c4d3e6; }
+
+    /* ERROR */
+    .error-msg{ display:none; background:#fdecec; border:1px solid #f3c2c0; border-radius:12px; padding:12px 16px; color:#c0322b; font-size:13.5px; font-weight:700; margin-top:14px; text-align:center; }
+
+    /* RESULTS */
+    .result-area{ display:none; margin-top:22px; border:1.5px solid var(--line); border-radius:16px; overflow:hidden; }
+    .result-area.visible{ display:block; animation:rise .35s ease; }
+    @keyframes rise{ from{ opacity:0; transform:translateY(8px);} to{opacity:1;transform:none;} }
+    .ra-head{ background:var(--soft); padding:14px 20px; font-family:'Heebo',sans-serif; font-weight:700; font-size:15px; color:var(--navy); border-bottom:1px solid var(--line); }
+    .ra-body{ padding:6px 20px 18px; }
+    .result-row{ display:flex; justify-content:space-between; align-items:center; padding:11px 0; border-bottom:1px solid var(--line); font-size:13.5px; }
+    .result-row:last-child{ border-bottom:none; }
+    .result-row .label{ color:var(--muted); }
+    .result-row .value{ font-family:'Heebo',sans-serif; font-weight:800; color:var(--navy); }
+    .result-row-header{ padding:14px 0 6px; font-size:12.5px; font-weight:700; color:var(--cyan-deep); letter-spacing:.02em; text-transform:none; }
+    .result-row-sub{ display:flex; justify-content:space-between; padding:6px 0 6px 14px; font-size:12.5px; color:var(--muted); }
+    .result-row-sub .value{ font-weight:700; color:var(--navy); font-family:'Heebo',sans-serif; }
+    .result-total{ display:flex; justify-content:space-between; align-items:center; margin-top:14px; padding:16px 20px; background:linear-gradient(120deg,var(--navy),var(--navy-2)); border-radius:14px; color:#fff; }
+    .result-total span:first-child{ font-weight:600; font-size:14px; opacity:.92; }
+    .result-total span:last-child{ font-family:'Heebo',sans-serif; font-weight:900; font-size:26px; }
+    .not-eligible{ text-align:center; padding:22px 16px; color:var(--ink); font-size:16px; font-weight:700; }
+    .not-eligible small{ display:block; font-size:13px; color:var(--muted); margin-top:8px; font-weight:500; }
+    .capped-note{ font-size:12px; color:var(--amber); font-weight:700; text-align:left; padding:8px 0 2px; }
+
+    /* FOOTER */
+    .footer{ background:var(--navy); color:#9fb6d8; text-align:center; padding:18px; font-size:12px; margin-top:36px; line-height:1.6; }
+
+    /* MODAL */
+    .modal-overlay{ position:fixed; inset:0; background:rgba(10,20,50,.78); backdrop-filter:blur(3px); z-index:9999; display:flex; align-items:center; justify-content:center; padding:20px; }
+    .modal-box{ background:#fff; border-radius:20px; padding:0; max-width:560px; width:100%; direction:rtl; text-align:right; box-shadow:0 30px 80px rgba(0,0,0,.45); overflow:hidden; }
+    .modal-box .mb-top{ height:5px; background:linear-gradient(90deg,var(--cyan),var(--navy-2)); }
+    .mb-pad{ padding:36px 40px 34px; }
+    .modal-box h2{ font-family:'Heebo',sans-serif; font-size:22px; font-weight:800; color:var(--navy); margin-bottom:14px; }
+    .modal-box p{ font-size:14px; color:#3a4252; line-height:1.75; }
+    .modal-divider{ border:none; border-top:1px solid var(--line); margin:18px 0; }
+    .modal-disclaimer{ font-size:13px; color:#2a3140; font-weight:600; line-height:1.7; background:var(--soft); border:1px solid var(--line); border-radius:12px; padding:14px 16px; }
+    .modal-disclaimer-title{ font-weight:800; display:block; margin-bottom:6px; font-size:13.5px; color:var(--navy); }
+    .btn-confirm{ width:100%; background:linear-gradient(120deg,var(--cyan),var(--cyan-deep)); color:#fff; border:none; border-radius:50px; padding:14px; font-size:16px; font-weight:800; font-family:'Heebo',sans-serif; cursor:pointer; margin-top:22px; }
+    .btn-confirm:hover{ filter:brightness(1.05); }
+
+    @media (max-width:560px){
+      .navbar{ padding:0 12px; height:58px; } .nav-center{ font-size:13px; }
+      .page-hero{ padding:26px 12px 30px; } .hc-pad{ padding:26px 20px 24px; }
+      h1.title{ font-size:23px; } .grade-grid{ grid-template-columns:1fr; }
+      .mb-pad{ padding:26px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="welcome-modal">
+  <div class="modal-box">
+    <div class="mb-top"></div>
+    <div class="mb-pad">
+      <h2>משרת/ת מילואים יקר/ה</h2>
+      <p>אנו מבקשים להביע את הערכתנו העמוקה על תרומתכם המשמעותית לביטחון מדינת ישראל ולחוסנה.<br><br>מחשבון זה נועד לשקף את היקף שובר הנופש המגיע לכם בגין שירות מילואים שמ"פ בשנת 2026.</p>
+      <hr class="modal-divider" />
+      <div class="modal-disclaimer">
+        <span class="modal-disclaimer-title">הבהרה:</span>
+        החישוב המוצג במחשבון זה הינו אומדן בלבד, המבוסס על נתונים והנחות כלליות, ואינו מהווה התחייבות או קביעה מחייבת לגבי סכום השובר הסופי.<br><br>
+        הסכום בפועל ייקבע בהתאם לנתוני הזכאות האישיים, כפי שייקלטו ויאושרו על ידי הגורמים המוסמכים.
+      </div>
+      <button class="btn-confirm" onclick="closeModal()">מאשר/ת והמשך לחישוב</button>
+    </div>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="logo-ph">לוגו צה״ל</div>
+  <div class="nav-center">מחלקת מילואים אכ"א | עתכ"א מילואים</div>
+  <div class="nav-left">
+    <div class="logo-ph">תג</div>
+    <div class="logo-ph">יחידה</div>
+  </div>
+</nav>
+
+<!-- HERO + CALCULATOR -->
+<div class="page-hero">
+  <div class="hero-sq s1"></div>
+  <div class="hero-sq s2"></div>
+  <div class="hero-sq s3"></div>
+  <div class="hero-sq s4"></div>
+
+  <div class="hero-card">
+    <div class="hc-pad">
+      <span class="eyebrow">אומדן זכאות 2026</span>
+      <h1 class="title">מחשבון שובר נופש</h1>
+      <div class="hero-note">
+        <div class="note-pill">את מספר ימי המילואים ניתן לבדוק בטופס 3010 שניתן להפיק ב<a href="https://www.miluim.idf.il/personalzone/milforms/form-3010" target="_blank" rel="noopener noreferrer">אתר המילואים</a>.</div>
+        <div class="note-pill">אם אינך יודע/ת את <b>מדרג היחידה</b> שלך, יש לפנות אל (בבדיקה).</div>
+      </div>
+
+      <!-- Grades -->
+      <div class="section-head"><span class="step">1</span><h3>ימי שמ"פ לפי מדרג</h3><span class="hr"></span></div>
+      <div class="grade-grid">
+        <div class="form-group" data-top="1"><div class="fg-top"><span class="g-name">מדרג</span><span class="g-chip">א'+</span></div><input type="number" id="input-aleph-plus" min="0" max="365" step="1" placeholder="0" oninput="updateTotal()" /></div>
+        <div class="form-group" data-top="1"><div class="fg-top"><span class="g-name">מדרג</span><span class="g-chip">א'</span></div><input type="number" id="input-aleph" min="0" max="365" step="1" placeholder="0" oninput="updateTotal()" /></div>
+        <div class="form-group"><div class="fg-top"><span class="g-name">מדרג</span><span class="g-chip">ב'</span></div><input type="number" id="input-bet" min="0" max="365" step="1" placeholder="0" oninput="updateTotal()" /></div>
+        <div class="form-group"><div class="fg-top"><span class="g-name">מדרג</span><span class="g-chip">ג'</span></div><input type="number" id="input-gimel" min="0" max="365" step="1" placeholder="0" oninput="updateTotal()" /></div>
+        <div class="form-group"><div class="fg-top"><span class="g-name">מדרג</span><span class="g-chip">ד'</span></div><input type="number" id="input-dalet" min="0" max="365" step="1" placeholder="0" oninput="updateTotal()" /></div>
+        <div class="form-group"><div class="fg-top"><span class="g-name">מדרג</span><span class="g-chip">ה'</span></div><input type="number" id="input-hey" min="0" max="365" step="1" placeholder="0" oninput="updateTotal()" /></div>
+      </div>
+
+      <!-- Child -->
+      <div class="section-head"><span class="step">2</span><h3>פרטים נוספים</h3><span class="hr"></span></div>
+      <div class="child-panel">
+        <label class="child-label">
+          <input type="checkbox" id="check-child" />
+          <span>לבני/ביתי טרם מלאו 14 ב-60 הימים הראשונים למילואים בשנת 2026</span>
+        </label>
+      </div>
+
+      <!-- Total -->
+      <div class="summary-row"><span>סה"כ ימי שמ"פ</span><span><span id="total-days-display">0</span><span class="sum-unit">ימים</span></span></div>
+
+      <button class="btn-calc" onclick="calculate()">חשב שובר נופש</button>
+      <button class="btn-reset" onclick="resetCalculator()">איפוס</button>
+
+      <div class="error-msg" id="error-msg"></div>
+
+      <div class="result-area" id="results">
+        <div class="ra-head">תוצאות החישוב</div>
+        <div class="ra-body" id="result-content"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">מחשבון שובר נופש 2026 — אומדן בלבד. הסכום הסופי ייקבע על ידי הגורמים המוסמכים.</footer>
+
+<script>
+  const utmSource = new URLSearchParams(window.location.search).get('utm_source') || 'direct';
+  const GRADES = ['aleph_plus','aleph','bet','gimel','dalet','hey'];
+  const GRADE_NAMES = { aleph_plus:"א'+", aleph:"א'", bet:"ב'", gimel:"ג'", dalet:"ד'", hey:"ה'" };
+  const RATES = {
+    no_child:{ aleph_plus:{base:2630,rate:58,max:3500}, aleph:{base:2220,rate:50,max:2950}, bet:{base:1700,rate:40,max:2300}, gimel:{base:780,rate:18,max:1050}, dalet:{base:780,rate:18,max:1050}, hey:{base:605,rate:13,max:800} },
+    with_child:{ aleph_plus:{base:3375,rate:75,max:4500}, aleph:{base:2925,rate:65,max:3900}, bet:{base:2250,rate:50,max:3000}, gimel:{base:1020,rate:22,max:1350}, dalet:{base:1020,rate:22,max:1350}, hey:{base:760,rate:16,max:1000} }
+  };
+  function getNum(id){ const v=parseInt(document.getElementById(id).value,10); return isNaN(v)||v<0?0:v; }
+  function fmt(n){ return n.toLocaleString('he-IL',{minimumFractionDigits:0,maximumFractionDigits:0}); }
+  function closeModal(){ document.getElementById('welcome-modal').style.display='none'; }
+  function updateTotal(){ let total=0; for(const g of GRADES){ total+=getNum('input-'+g.replace('_','-')); } document.getElementById('total-days-display').textContent=total; }
+  function showError(msg){ const el=document.getElementById('error-msg'); el.textContent=msg; el.style.display='block'; document.getElementById('results').classList.remove('visible'); }
+  function hideError(){ document.getElementById('error-msg').style.display='none'; }
+  function calculate(){
+    hideError();
+    const days={}; for(const g of GRADES){ days[g]=getNum('input-'+g.replace('_','-')); }
+    const hasChild=document.getElementById('check-child').checked;
+    const total=Object.values(days).reduce((a,b)=>a+b,0);
+    for(const g of GRADES){ if(days[g]>365){ showError('שגיאה: ניתן להזין עד 365 ימים בשדה בודד'); return; } }
+    if(total>365){ showError('שגיאה: סך הכל ימים חורג מ-365'); return; }
+    if(total<45){ showNotEligible(); logToServer(days,hasChild,'',0); return; }
+    let cumulative=0, baseGrade=GRADES[GRADES.length-1];
+    for(const g of GRADES){ cumulative+=days[g]; if(cumulative>=23){ baseGrade=g; break; } }
+    const remaining={...days}; const baseUsed={}; for(const g of GRADES) baseUsed[g]=0;
+    const baseGradeIdx=GRADES.indexOf(baseGrade);
+    const qualifyingReversed=GRADES.slice(0,baseGradeIdx+1).reverse();
+    let partA=23; for(const g of qualifyingReversed){ if(partA<=0) break; const take=Math.min(remaining[g],partA); baseUsed[g]+=take; remaining[g]-=take; partA-=take; }
+    let partB=22; const allReversed=[...GRADES].reverse();
+    for(const g of allReversed){ if(partB<=0) break; const take=Math.min(remaining[g],partB); baseUsed[g]+=take; remaining[g]-=take; partB-=take; }
+    const additionalDays={}; for(const g of GRADES) additionalDays[g]=0; let additionalLeft=15;
+    for(const g of GRADES){ if(additionalLeft<=0) break; const take=Math.min(remaining[g],additionalLeft); additionalDays[g]=take; remaining[g]-=take; additionalLeft-=take; }
+    const rateKey=hasChild?'with_child':'no_child'; const rateTable=RATES[rateKey];
+    const basePayment=rateTable[baseGrade].base; let additionalPayment=0;
+    for(const g of GRADES){ additionalPayment+=rateTable[g].rate*additionalDays[g]; }
+    const rawTotal=basePayment+additionalPayment; const maxPayment=rateTable[baseGrade].max;
+    const totalPayment=Math.min(rawTotal,maxPayment); const capped=rawTotal>maxPayment;
+    showResults(baseGrade,basePayment,additionalDays,additionalPayment,totalPayment,capped,rateTable);
+    logToServer(days,hasChild,baseGrade,totalPayment);
+  }
+  function showNotEligible(){ document.getElementById('result-content').innerHTML='<div class="not-eligible">לא זכאי לשובר הנופש<small>נדרש לפחות 45 ימי שמ"פ</small></div>'; document.getElementById('results').classList.add('visible'); }
+  function showResults(baseGrade,basePayment,additionalDays,additionalPayment,totalPayment,capped,rateTable){
+    const totalAdd=Object.values(additionalDays).reduce((a,b)=>a+b,0); let html='';
+    html+=`<div class="result-row"><span class="label">מדרג בסיס</span><span class="value">מדרג ${GRADE_NAMES[baseGrade]}</span></div>`;
+    html+=`<div class="result-row"><span class="label">זכאות בסיס (45 ימים ראשונים)</span><span class="value">${fmt(basePayment)} ₪</span></div>`;
+    if(totalAdd>0){
+      html+=`<div class="result-row-header">תוספת ימים (${totalAdd} ימים נוספים, ימים 46–${45+totalAdd})</div>`;
+      for(const g of GRADES){ if(additionalDays[g]>0){ const amount=rateTable[g].rate*additionalDays[g]; html+=`<div class="result-row-sub"><span>מדרג ${GRADE_NAMES[g]}: ${additionalDays[g]} ימים × ₪${rateTable[g].rate}</span><span class="value">${fmt(amount)} ₪</span></div>`; } }
+      html+=`<div class="result-row"><span class="label">סה"כ תוספות</span><span class="value">${fmt(additionalPayment)} ₪</span></div>`;
+    }
+    if(capped){ html+=`<div class="result-row"><span class="label">לפני תקרה</span><span class="value">${fmt(basePayment+additionalPayment)} ₪</span></div>`; html+=`<div class="capped-note">הסכום הוגבל לתקרת מדרג ${GRADE_NAMES[baseGrade]}: ${fmt(rateTable[baseGrade].max)} ₪</div>`; }
+    html+=`<div class="result-total"><span>שובר נופש משוער</span><span>${fmt(totalPayment)} ₪</span></div>`;
+    document.getElementById('result-content').innerHTML=html; document.getElementById('results').classList.add('visible');
+  }
+  function logToServer(days,hasChild,baseGrade,totalPayment){ fetch('/log-nofesh',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({aleph_plus:days.aleph_plus||0,aleph:days.aleph||0,bet:days.bet||0,gimel:days.gimel||0,dalet:days.dalet||0,hey:days.hey||0,child:hasChild,base_grade:baseGrade,total:totalPayment,source:utmSource})}).catch(()=>{}); }
+  function resetCalculator(){ for(const g of GRADES){ document.getElementById('input-'+g.replace('_','-')).value=''; } document.getElementById('check-child').checked=false; document.getElementById('total-days-display').textContent='0'; hideError(); document.getElementById('results').classList.remove('visible'); }
+
+  // demo mode for the comparison gallery
+  if(new URLSearchParams(location.search).get('demo')==='1'){
+    closeModal();
+    document.getElementById('input-aleph-plus').value=30;
+    document.getElementById('input-bet').value=20;
+    updateTotal(); calculate();
+  }
+</script>
+</body>
+</html>
