@@ -1,22 +1,28 @@
-﻿# Render Log Fetcher - 5min windows from 28.4 08:00 Israel time
-# Filter: [LOG]
-# Save to date folders
+# Render Log Fetcher - 5min windows
+# Filter: [LOG] | Save to C:\RenderLogs\{date}\
 
-$baseDir    = "C:\RenderLogs"
-$resourceId = "srv-d7bv8dbbc2fs73fvvtq0"
-$filterText = "[LOG]"
+$baseDir           = "C:\RenderLogs"
+$resourceId        = "srv-d7bv8dbbc2fs73fvvtq0"
+$filterText        = "[LOG]"
 $israelOffsetHours = 3
-$maxRetries = 3
-$retryDelay = 3
+$maxRetries        = 3
+$retryDelay        = 3
+$sleepMs           = 500
 
 if (-not (Test-Path $baseDir)) {
     New-Item -ItemType Directory -Path $baseDir | Out-Null
     Write-Host "Created folder: $baseDir"
 }
 
-$startIL  = [DateTime]::new(2026, 4, 28, 8, 0, 0)
-$startUtc = $startIL.AddHours(-$israelOffsetHours)
-$nowUtc   = (Get-Date).ToUniversalTime()
+$lastRunFile = Join-Path $PSScriptRoot "last_run.json"
+if (Test-Path $lastRunFile) {
+    $lastRun = Get-Content $lastRunFile | ConvertFrom-Json
+    $startIL = [DateTime]::Parse($lastRun.end_il)
+} else {
+    $startIL = [DateTime]::new(2026, 6, 3, 16, 40, 0)
+}
+$startUtc  = $startIL.AddHours(-$israelOffsetHours)
+$nowUtc    = (Get-Date).ToUniversalTime()
 $israelNow = $nowUtc.AddHours($israelOffsetHours)
 
 Write-Host ""
@@ -96,7 +102,7 @@ while ($windowStart -lt $nowUtc) {
     $windowStart = $windowStart.AddMinutes(5)
     $index++
 
-    Start-Sleep -Milliseconds 500
+    Start-Sleep -Milliseconds $sleepMs
 }
 
 Write-Host ""
@@ -109,8 +115,12 @@ if ($errors.Count -gt 0) {
     Write-Host (" Failed windows (" + $errors.Count + "):") -ForegroundColor Yellow
     $errors | ForEach-Object { Write-Host ("   - " + $_) -ForegroundColor Yellow }
     Write-Host ""
-    Write-Host " Copy the list above and send to Claude for a retry script" -ForegroundColor Yellow
+    Write-Host " Run /renderlogs in Claude Code to auto-generate the retry script" -ForegroundColor Yellow
 } else {
     Write-Host " All windows fetched successfully!" -ForegroundColor Green
 }
+
+$endIL = $nowUtc.AddHours($israelOffsetHours)
+@{ end_il = $endIL.ToString("yyyy-MM-dd HH:mm") } | ConvertTo-Json | Set-Content $lastRunFile
+Write-Host (" Next run will start from: " + $endIL.ToString("yyyy-MM-dd HH:mm") + " (IL)") -ForegroundColor Cyan
 Write-Host "============================================================"

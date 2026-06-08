@@ -239,21 +239,6 @@ def create_flask_app():
     def nofesh():
         return send_from_directory(".", "nofesh.html")
 
-    @app.route("/nofesh1")
-    def nofesh1():
-        return send_from_directory(".", "nofesh1.html")
-
-    @app.route("/nofesh2")
-    def nofesh2():
-        return send_from_directory(".", "nofesh2.html")
-
-    @app.route("/nofesh3")
-    def nofesh3():
-        return send_from_directory(".", "nofesh3.html")
-
-    @app.route("/nofesh4")
-    def nofesh4():
-        return send_from_directory(".", "nofesh4.html")
 
     @app.route("/s/<source>")
     def short_link(source):

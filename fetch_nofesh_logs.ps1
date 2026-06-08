@@ -1,10 +1,10 @@
-﻿# Render Log Fetcher - 5min windows from 01/05 12:30 Israel time
-# Filter: [LOG]
-# Save to date folders
+# Render Log Fetcher - 5min windows
+# Filter: [NOFESH]
+# Save to C:\RenderLogs\NOFESH\{date}\
 
-$baseDir    = "C:\RenderLogs"
+$baseDir    = "C:\RenderLogs\NOFESH"
 $resourceId = "srv-d7bv8dbbc2fs73fvvtq0"
-$filterText = "[LOG]"
+$filterText = "[NOFESH]"
 $israelOffsetHours = 3
 $maxRetries = 3
 $retryDelay = 3
@@ -14,12 +14,12 @@ if (-not (Test-Path $baseDir)) {
     Write-Host "Created folder: $baseDir"
 }
 
-$lastRunFile = Join-Path $PSScriptRoot "last_run.json"
+$lastRunFile = Join-Path $PSScriptRoot "last_run_nofesh.json"
 if (Test-Path $lastRunFile) {
     $lastRun = Get-Content $lastRunFile | ConvertFrom-Json
     $startIL = [DateTime]::Parse($lastRun.end_il)
 } else {
-    $startIL = [DateTime]::new(2026, 5, 11, 18, 35, 0)
+    $startIL = [DateTime]::new(2026, 6, 1, 0, 0, 0)
 }
 $startUtc = $startIL.AddHours(-$israelOffsetHours)
 $nowUtc   = (Get-Date).ToUniversalTime()
@@ -27,7 +27,7 @@ $israelNow = $nowUtc.AddHours($israelOffsetHours)
 
 Write-Host ""
 Write-Host "============================================================"
-Write-Host " Render Log Fetcher - 5-minute windows (by date folders)"
+Write-Host " Render NOFESH Log Fetcher - 5-minute windows"
 Write-Host "============================================================"
 Write-Host (" Start (IL): " + $startIL.ToString("yyyy-MM-dd HH:mm"))
 Write-Host (" Now   (IL): " + $israelNow.ToString("yyyy-MM-dd HH:mm"))
@@ -114,13 +114,10 @@ if ($errors.Count -gt 0) {
     Write-Host ""
     Write-Host (" Failed windows (" + $errors.Count + "):") -ForegroundColor Yellow
     $errors | ForEach-Object { Write-Host ("   - " + $_) -ForegroundColor Yellow }
-    Write-Host ""
-    Write-Host " Run /renderlogs in Claude Code to auto-generate the retry script" -ForegroundColor Yellow
 } else {
     Write-Host " All windows fetched successfully!" -ForegroundColor Green
 }
 
-# Save end time for next run
 $endIL = $nowUtc.AddHours($israelOffsetHours)
 @{ end_il = $endIL.ToString("yyyy-MM-dd HH:mm") } | ConvertTo-Json | Set-Content $lastRunFile
 Write-Host (" Next run will start from: " + $endIL.ToString("yyyy-MM-dd HH:mm") + " (IL)") -ForegroundColor Cyan
