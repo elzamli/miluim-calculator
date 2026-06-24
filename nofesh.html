@@ -165,6 +165,32 @@
   </div>
 </div>
 
+<!-- GRADE MODAL -->
+<div class="modal-overlay" id="grade-modal" style="display:none" onclick="if(event.target===this)closeGradeModal()">
+  <div class="modal-box">
+    <div class="mb-pad">
+      <h2>מה המדרג שלכם?</h2>
+      <hr class="modal-divider" />
+      <p>רמת המדרג נקבעת לפי אופי היחידה והתפקיד שבו ביצעתם את שירות המילואים. להלן חלוקה כללית שתעזור לכם להעריך:</p>
+      <div style="margin:16px 0 4px; display:flex; flex-direction:column; gap:8px;">
+        <div style="display:flex;gap:10px;align-items:baseline"><span class="g-chip" style="background:var(--gold-deep);flex-shrink:0">א׳+</span><span style="font-size:13.5px;color:var(--ink)">גדודים לוחמים / יחידות קצה קדמיות</span></div>
+        <div style="display:flex;gap:10px;align-items:baseline"><span class="g-chip" style="background:var(--gold-deep);flex-shrink:0">א׳</span><span style="font-size:13.5px;color:var(--ink)">חטיבות</span></div>
+        <div style="display:flex;gap:10px;align-items:baseline"><span class="g-chip" style="background:var(--navy-2);flex-shrink:0">ב׳</span><span style="font-size:13.5px;color:var(--ink)">אוגדות</span></div>
+        <div style="display:flex;gap:10px;align-items:baseline"><span class="g-chip" style="background:var(--navy-2);flex-shrink:0">ג׳</span><span style="font-size:13.5px;color:var(--ink)">הגנת יישובים (הגמ"ר) / אבטחת יישובים</span></div>
+        <div style="display:flex;gap:10px;align-items:baseline"><span class="g-chip" style="background:var(--navy-2);flex-shrink:0">ד׳</span><span style="font-size:13.5px;color:var(--ink)">יחידות הדרכה, אימונים ואבטחה</span></div>
+        <div style="display:flex;gap:10px;align-items:baseline"><span class="g-chip" style="background:var(--navy-2);flex-shrink:0">ה׳</span><span style="font-size:13.5px;color:var(--ink)">יחידות מטה, עורף ומנהלה</span></div>
+      </div>
+      <hr class="modal-divider" />
+      <div class="modal-disclaimer">
+        <span class="modal-disclaimer-title">שים לב</span>
+        הפירוט לעיל הינו כללי בלבד ונועד לצורך הערכה. הסיווג הסופי והקובע של רמת המדרג לחישוב שובר הנופש נקבע אך ורק על פי <b>מדיניות מחלקת המילואים באגף כוח האדם</b> ובהתאם לנתוני השירות בפועל.<br><br>
+        למידע נוסף ובירורים ניתן לפנות למוקד המילואים בטלפון <b>1111</b> שלוחה <b>4</b>.
+      </div>
+      <button class="btn-confirm" onclick="closeGradeModal()">הבנתי, סגור</button>
+    </div>
+  </div>
+</div>
+
 <!-- NAVBAR -->
 <nav class="navbar">
   <div><img class="logo-img" src="/static/logo_new.png" alt="לוגו צה״ל" /></div>
@@ -200,7 +226,7 @@
       <div class="hero-underline"></div>
       <div class="hero-note">
         <div class="note-pill">את מספר ימי המילואים ניתן לבדוק בטופס 3010 שניתן להפיק ב<a href="https://www.miluim.idf.il/personalzone/milforms/form-3010" target="_blank" rel="noopener noreferrer">אתר המילואים</a>.</div>
-        <div class="note-pill">אם אינך יודע/ת את <b>מדרג היחידה</b> שלך, יש לפנות אל (בבדיקה).</div>
+        <div class="note-pill"><a href="#" onclick="openGradeModal();return false;">לא בטוחים מה המדרג שלכם?</a></div>
       </div>
 
       <div class="section-head"><span class="step">1</span><h3>ימי שמ"פ לפי מדרג</h3><span class="hr"></span></div>
@@ -259,6 +285,8 @@
   function getNum(id){const v=parseInt(document.getElementById(id).value,10);return isNaN(v)||v<0?0:v;}
   function fmt(n){return n.toLocaleString('he-IL',{minimumFractionDigits:0,maximumFractionDigits:0});}
   function closeModal(){document.getElementById('welcome-modal').style.display='none';}
+  function openGradeModal(){document.getElementById('grade-modal').style.display='flex';}
+  function closeGradeModal(){document.getElementById('grade-modal').style.display='none';}
   function updateTotal(){let t=0;for(const g of GRADES)t+=getNum('input-'+g.replace('_','-'));document.getElementById('total-days-display').textContent=t;}
   function showError(msg){const el=document.getElementById('error-msg');el.textContent=msg;el.style.display='block';document.getElementById('results').classList.remove('visible');}
   function hideError(){document.getElementById('error-msg').style.display='none';}
@@ -273,8 +301,8 @@
     let cumulative=0,baseGrade=GRADES[GRADES.length-1];
     for(const g of GRADES){cumulative+=days[g];if(cumulative>=23){baseGrade=g;break;}}
     const remaining={...days},baseUsed={};for(const g of GRADES)baseUsed[g]=0;
-    const qualRev=GRADES.slice(0,GRADES.indexOf(baseGrade)+1).reverse();
-    let partA=23;for(const g of qualRev){if(partA<=0)break;const take=Math.min(remaining[g],partA);baseUsed[g]+=take;remaining[g]-=take;partA-=take;}
+    const qual=GRADES.slice(0,GRADES.indexOf(baseGrade)+1);
+    let partA=23;for(const g of qual){if(partA<=0)break;const take=Math.min(remaining[g],partA);baseUsed[g]+=take;remaining[g]-=take;partA-=take;}
     let partB=22;for(const g of[...GRADES].reverse()){if(partB<=0)break;const take=Math.min(remaining[g],partB);baseUsed[g]+=take;remaining[g]-=take;partB-=take;}
     const addDays={};for(const g of GRADES)addDays[g]=0;
     let addLeft=15;for(const g of GRADES){if(addLeft<=0)break;const take=Math.min(remaining[g],addLeft);addDays[g]=take;remaining[g]-=take;addLeft-=take;}
