@@ -169,12 +169,12 @@
 <div class="modal-overlay" id="grade-modal" style="display:none" onclick="if(event.target===this)closeGradeModal()">
   <div class="modal-box">
     <div class="mb-pad">
-      <h2>מה המדרג שלכם?</h2>
+      <h2>מה המדרג של היחידה שלי?</h2>
       <hr class="modal-divider" />
-      <p>רמת המדרג נקבעת לפי אופי היחידה והתפקיד שבו ביצעתם את שירות המילואים. להלן חלוקה כללית שתעזור לכם להעריך:</p>
+      <p>מדרג היחידה נקבע לפי אופי היחידה והתפקיד שבו ביצעתם את שירות המילואים. להלן חלוקה כללית שתעזור לכם להעריך:</p>
       <div style="margin:16px 0 4px; display:flex; flex-direction:column; gap:8px;">
-        <div style="display:flex;gap:10px;align-items:baseline"><span class="g-chip" style="background:var(--gold-deep);flex-shrink:0">א׳+</span><span style="font-size:13.5px;color:var(--ink)">גדודים לוחמים / יחידות קצה קדמיות</span></div>
-        <div style="display:flex;gap:10px;align-items:baseline"><span class="g-chip" style="background:var(--gold-deep);flex-shrink:0">א׳</span><span style="font-size:13.5px;color:var(--ink)">חטיבות</span></div>
+        <div style="display:flex;gap:10px;align-items:baseline"><span class="g-chip" style="background:var(--navy-2);flex-shrink:0">א׳+</span><span style="font-size:13.5px;color:var(--ink)">גדודים לוחמים / יחידות קצה קדמיות</span></div>
+        <div style="display:flex;gap:10px;align-items:baseline"><span class="g-chip" style="background:var(--navy-2);flex-shrink:0">א׳</span><span style="font-size:13.5px;color:var(--ink)">חטיבות</span></div>
         <div style="display:flex;gap:10px;align-items:baseline"><span class="g-chip" style="background:var(--navy-2);flex-shrink:0">ב׳</span><span style="font-size:13.5px;color:var(--ink)">אוגדות</span></div>
         <div style="display:flex;gap:10px;align-items:baseline"><span class="g-chip" style="background:var(--navy-2);flex-shrink:0">ג׳</span><span style="font-size:13.5px;color:var(--ink)">הגנת יישובים (הגמ"ר) / אבטחת יישובים</span></div>
         <div style="display:flex;gap:10px;align-items:baseline"><span class="g-chip" style="background:var(--navy-2);flex-shrink:0">ד׳</span><span style="font-size:13.5px;color:var(--ink)">יחידות הדרכה, אימונים ואבטחה</span></div>
@@ -183,7 +183,7 @@
       <hr class="modal-divider" />
       <div class="modal-disclaimer">
         <span class="modal-disclaimer-title">שים לב</span>
-        הפירוט לעיל הינו כללי בלבד ונועד לצורך הערכה. הסיווג הסופי והקובע של רמת המדרג לחישוב שובר הנופש נקבע אך ורק על פי <b>מדיניות מחלקת המילואים באגף כוח האדם</b> ובהתאם לנתוני השירות בפועל.<br><br>
+        הפירוט לעיל הינו כללי בלבד ונועד לצורך הערכה. הסיווג הסופי והקובע של <b>מדרג היחידה</b> לחישוב שובר הנופש נקבע אך ורק על פי מדיניות מחלקת המלואים באגף כוח האדם ובהתאם לנתוני השירות בפועל.<br><br>
         למידע נוסף ובירורים ניתן לפנות למוקד המילואים בטלפון <b>1111</b> שלוחה <b>4</b>.
       </div>
       <button class="btn-confirm" onclick="closeGradeModal()">הבנתי, סגור</button>
@@ -196,7 +196,6 @@
   <div><img class="logo-img" src="/static/logo_new.png" alt="לוגו צה״ל" /></div>
   <div class="nav-center">מחלקת מילואים אכ"א</div>
   <div class="nav-left">
-    <img class="logo-img" src="/static/תג.png" alt="תג" />
     <img class="logo-img" src="/static/יחידה.png" alt="סמל יחידה" />
   </div>
 </nav>
@@ -208,13 +207,11 @@
     <!-- Stub header -->
     <div class="vstub">
       <div class="vstub-l">
-        <div class="eyebrow">שובר נופש</div>
-        <div class="vstub-title">מילואים שמ"פ 2026</div>
+        <div class="vstub-title">שובר נופש 2026</div>
       </div>
-      <div class="seal"><b>2026</b><small>אכ״א</small></div>
       <div class="vstub-r">
         <div class="eyebrow">תוקף עד</div>
-        <div class="vstub-title">31.12.2026</div>
+        <div class="vstub-title">31/12/2026</div>
       </div>
     </div>
 
@@ -231,8 +228,8 @@
 
       <div class="section-head"><span class="step">1</span><h3>ימי שמ"פ לפי מדרג</h3><span class="hr"></span></div>
       <div class="grade-grid">
-        <div class="form-group" data-top="1"><div class="fg-top"><span class="g-name">מדרג</span><span class="g-chip">א'+</span></div><input type="number" id="input-aleph-plus" min="0" max="365" step="1" placeholder="0" oninput="updateTotal()" /></div>
-        <div class="form-group" data-top="1"><div class="fg-top"><span class="g-name">מדרג</span><span class="g-chip">א'</span></div><input type="number" id="input-aleph" min="0" max="365" step="1" placeholder="0" oninput="updateTotal()" /></div>
+        <div class="form-group"><div class="fg-top"><span class="g-name">מדרג</span><span class="g-chip">א'+</span></div><input type="number" id="input-aleph-plus" min="0" max="365" step="1" placeholder="0" oninput="updateTotal()" /></div>
+        <div class="form-group"><div class="fg-top"><span class="g-name">מדרג</span><span class="g-chip">א'</span></div><input type="number" id="input-aleph" min="0" max="365" step="1" placeholder="0" oninput="updateTotal()" /></div>
         <div class="form-group"><div class="fg-top"><span class="g-name">מדרג</span><span class="g-chip">ב'</span></div><input type="number" id="input-bet" min="0" max="365" step="1" placeholder="0" oninput="updateTotal()" /></div>
         <div class="form-group"><div class="fg-top"><span class="g-name">מדרג</span><span class="g-chip">ג'</span></div><input type="number" id="input-gimel" min="0" max="365" step="1" placeholder="0" oninput="updateTotal()" /></div>
         <div class="form-group"><div class="fg-top"><span class="g-name">מדרג</span><span class="g-chip">ד'</span></div><input type="number" id="input-dalet" min="0" max="365" step="1" placeholder="0" oninput="updateTotal()" /></div>
@@ -243,7 +240,7 @@
       <div class="child-panel">
         <label class="child-label">
           <input type="checkbox" id="check-child" />
-          <span>אני הורה לילד/ה שטרם מלאו לו/ה 14 במהלך 60 ימי המילואים הראשונים בשנת 2026</span>
+          <span>אני הורה לילד/ה שטרם מלאו לו/לה 14 במהלך 60 ימי המילואים הראשונים <b>שביצעתי</b> בשנת 2026</span>
         </label>
       </div>
 
