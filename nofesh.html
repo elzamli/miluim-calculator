@@ -276,7 +276,7 @@
   const GRADES = ['aleph_plus', 'aleph', 'bet', 'gimel', 'dalet', 'hey'];
   const GRADE_NAMES = { aleph_plus: "א'+", aleph: "א'", bet: "ב'", gimel: "ג'", dalet: "ד'", hey: "ה'" };
   const RATES = {
-    no_child: { aleph_plus:{base:2630,rate:58,max:3500}, aleph:{base:2220,rate:50,max:2950}, bet:{base:1700,rate:40,max:2300}, gimel:{base:780,rate:18,max:1050}, dalet:{base:780,rate:18,max:1050}, hey:{base:605,rate:13,max:800} },
+    no_child: { aleph_plus:{base:2630,rate:58,max:3500}, aleph:{base:2200,rate:50,max:2950}, bet:{base:1700,rate:40,max:2300}, gimel:{base:780,rate:18,max:1050}, dalet:{base:780,rate:18,max:1050}, hey:{base:605,rate:13,max:800} },
     with_child: { aleph_plus:{base:3375,rate:75,max:4500}, aleph:{base:2925,rate:65,max:3900}, bet:{base:2250,rate:50,max:3000}, gimel:{base:1020,rate:22,max:1350}, dalet:{base:1020,rate:22,max:1350}, hey:{base:760,rate:16,max:1000} }
   };
   function getNum(id){const v=parseInt(document.getElementById(id).value,10);return isNaN(v)||v<0?0:v;}
