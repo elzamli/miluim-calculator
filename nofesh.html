@@ -120,7 +120,9 @@
     .barcode{ height:46px; margin:0 auto 10px; max-width:300px; background:
         repeating-linear-gradient(90deg, var(--navy) 0 2px, transparent 2px 4px, var(--navy) 4px 7px, transparent 7px 9px, var(--navy) 9px 10px, transparent 10px 14px, var(--navy) 14px 17px, transparent 17px 19px); opacity:.85; border-radius:2px; }
     .serial{ font-family:'Heebo',monospace; font-size:12.5px; font-weight:700; color:var(--navy); letter-spacing:.18em; }
-    .finenote{ font-size:11px; color:var(--muted); margin-top:6px; letter-spacing:.02em; }
+    .finenote{ font-size:13px; color:var(--muted); margin-top:6px; letter-spacing:.02em; }
+    .cta-link{ color:var(--gold); font-weight:700; text-decoration:underline; font-size:13px; }
+    .cta-link:hover{ opacity:.75; }
 
     /* Footer */
     .footer{ background:var(--navy); color:#9fb6d8; text-align:center; padding:18px; font-size:12px; margin-top:34px; line-height:1.6; border-top:2px solid var(--gold); }
@@ -222,8 +224,8 @@
       <h1 class="title">מחשבון שובר נופש</h1>
       <div class="hero-underline"></div>
       <div class="hero-note">
-        <div class="note-pill">את מספר ימי המילואים ניתן לבדוק בטופס 3010 שניתן להפיק ב<a href="https://www.miluim.idf.il/personalzone/milforms/form-3010" target="_blank" rel="noopener noreferrer">אתר המילואים</a>.</div>
-        <div class="note-pill"><a href="#" onclick="openGradeModal();return false;">לא בטוחים מה המדרג שלכם?</a></div>
+        <div class="note-pill">את מספר ימי המילואים שביצעת בשנת 2026 ניתן לבדוק בטופס 3010 שניתן להפיק ב<a href="https://www.miluim.idf.il/personalzone/milforms/form-3010" target="_blank" rel="noopener noreferrer">אתר המילואים</a>.</div>
+        <div class="note-pill">לא בטוחים מה המדרג שלכם?<br><a href="#" class="cta-link" onclick="openGradeModal();return false;">לחצו כאן</a></div>
       </div>
 
       <div class="section-head"><span class="step">1</span><h3>ימי שמ"פ לפי מדרג</h3><span class="hr"></span></div>
@@ -261,8 +263,6 @@
 
     <!-- Foot stub -->
     <div class="vfoot">
-      <div class="barcode"></div>
-      <div class="serial">NO. 2026-‎0000000</div>
       <div class="finenote">אומדן בלבד · אינו מהווה התחייבות לסכום הסופי</div>
     </div>
 
