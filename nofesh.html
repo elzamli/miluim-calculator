@@ -288,6 +288,9 @@
   function showError(msg){const el=document.getElementById('error-msg');el.textContent=msg;el.style.display='block';document.getElementById('results').classList.remove('visible');}
   function hideError(){document.getElementById('error-msg').style.display='none';}
   function calculate(){
+    const btn=document.querySelector('.btn-calc');
+    if(btn.disabled)return;
+    btn.disabled=true;setTimeout(()=>btn.disabled=false,2000);
     hideError();
     const days={};for(const g of GRADES)days[g]=getNum('input-'+g.replace('_','-'));
     const hasChild=document.getElementById('check-child').checked;
