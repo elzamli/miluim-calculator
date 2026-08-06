@@ -239,11 +239,19 @@ def create_flask_app():
     def nofesh():
         return send_from_directory(".", "nofesh.html")
 
+    @app.route("/fighter")
+    def fighter():
+        return send_from_directory(".", "fighter.html")
 
     @app.route("/s/<source>")
     def short_link(source):
         from flask import redirect
         return redirect(f"/nofesh?utm_source={source}")
+
+    @app.route("/f/<source>")
+    def fighter_short_link(source):
+        from flask import redirect
+        return redirect(f"/fighter?utm_source={source}")
 
     @app.route("/log-nofesh", methods=["POST"])
     def api_log_nofesh():
@@ -255,6 +263,19 @@ def create_flask_app():
             f"dalet={data.get('dalet', 0)} hey={data.get('hey', 0)} "
             f"child={data.get('child', False)} | "
             f"base={data.get('base_grade', '')} total={data.get('total', 0)} "
+            f"source={data.get('source', 'direct')}",
+            flush=True,
+        )
+        return jsonify({"ok": True})
+
+    @app.route("/log-fighter", methods=["POST"])
+    def api_log_fighter():
+        data = request.get_json(force=True)
+        print(
+            f"[FIGHTER] {datetime.now().isoformat()} | "
+            f"aleph_plus={data.get('aleph_plus', 0)} aleph={data.get('aleph', 0)} "
+            f"bet={data.get('bet', 0)} | "
+            f"cap_grade={data.get('cap_grade', '')} total={data.get('total', 0)} "
             f"source={data.get('source', 'direct')}",
             flush=True,
         )
