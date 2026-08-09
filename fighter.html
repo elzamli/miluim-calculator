@@ -210,10 +210,6 @@
       <div class="vstub-l">
         <div class="vstub-title">כרטיס Fighter לשנת 2026</div>
       </div>
-      <div class="vstub-r">
-        <div class="eyebrow">תוקף עד</div>
-        <div class="vstub-title">31/12/2026</div>
-      </div>
     </div>
 
     <div class="perf"><span class="dash"></span></div>
@@ -373,55 +369,41 @@
 
   function showResults(days, alloc, uncapped, finalAmt, capped, cap, capGrade, seg2Size, seg3Size){
     let html = '';
+    const total = Object.values(days).reduce((a,b)=>a+b,0);
+    let budget = capped ? cap : Infinity;
 
-    // Segment 1-30
-    const seg1Total = Object.values(alloc).reduce((a, g) => a + (typeof g === 'object' ? g.seg1 : 0), 0);
-    const hasSeg1 = GRADES.some(g => alloc[g].seg1 > 0);
-    if (hasSeg1){
-      let seg1Amt = 0;
-      for (const g of GRADES) seg1Amt += alloc[g].seg1 * RATES[g].seg1;
-      html += `<div class="result-seg-header">ימים 1–${Math.min(30, Object.values(days).reduce((a,b)=>a+b,0))} (מקטע בסיס — ${Object.values(alloc).reduce((a,g)=>a+g.seg1,0)} ימים)</div>`;
+    function renderSeg(header, segKey, rateKey){
+      const hasDays = GRADES.some(g => alloc[g][segKey] > 0);
+      if (!hasDays) return;
+      const segDays = GRADES.reduce((a,g) => a + alloc[g][segKey], 0);
+      html += `<div class="result-seg-header">${header} (${segDays} ימים)</div>`;
       for (const g of GRADES){
-        if (alloc[g].seg1 > 0){
-          const a = alloc[g].seg1 * RATES[g].seg1;
-          html += `<div class="result-row-sub"><span>מדרג ${GRADE_NAMES[g]}: ${alloc[g].seg1} ימים × ₪${RATES[g].seg1}</span><span class="value">${fmt(a)} ₪</span></div>`;
+        const d = alloc[g][segKey];
+        if (d <= 0) continue;
+        const rate = RATES[g][rateKey];
+        const fullAmt = d * rate;
+        if (budget <= 0){
+          html += `<div class="result-row-sub"><span>מדרג ${GRADE_NAMES[g]}: ${d} ימים — מעל התקרה</span><span class="value" style="color:var(--muted)">—</span></div>`;
+        } else if (fullAmt <= budget){
+          html += `<div class="result-row-sub"><span>מדרג ${GRADE_NAMES[g]}: ${d} ימים × ₪${rate}</span><span class="value">${fmt(fullAmt)} ₪</span></div>`;
+          budget -= fullAmt;
+        } else {
+          const daysIn  = Math.floor(budget / rate);
+          const daysOver = d - daysIn;
+          if (daysIn > 0){
+            html += `<div class="result-row-sub"><span>מדרג ${GRADE_NAMES[g]}: ${daysIn} ימים × ₪${rate}</span><span class="value">${fmt(daysIn * rate)} ₪</span></div>`;
+          }
+          html += `<div class="result-row-sub"><span>מדרג ${GRADE_NAMES[g]}: ${daysOver} ימים — מעל התקרה</span><span class="value" style="color:var(--muted)">—</span></div>`;
+          budget = 0;
         }
       }
     }
 
-    // Segment 31-45
-    if (seg2Size > 0){
-      let seg2Amt = 0;
-      for (const g of GRADES) seg2Amt += alloc[g].seg2 * RATES[g].seg2;
-      html += `<div class="result-seg-header">ימים 31–${30 + seg2Size} (מקטע מוגדל — ${seg2Size} ימים)</div>`;
-      for (const g of GRADES){
-        if (alloc[g].seg2 > 0){
-          const a = alloc[g].seg2 * RATES[g].seg2;
-          html += `<div class="result-row-sub"><span>מדרג ${GRADE_NAMES[g]}: ${alloc[g].seg2} ימים × ₪${RATES[g].seg2}</span><span class="value">${fmt(a)} ₪</span></div>`;
-        }
-      }
-    }
-
-    // Segment 46+
-    if (seg3Size > 0){
-      let seg3Amt = 0;
-      for (const g of GRADES) seg3Amt += alloc[g].seg3 * RATES[g].seg3;
-      html += `<div class="result-seg-header">ימים 46 ואילך (${seg3Size} ימים)</div>`;
-      for (const g of GRADES){
-        if (alloc[g].seg3 > 0){
-          const a = alloc[g].seg3 * RATES[g].seg3;
-          html += `<div class="result-row-sub"><span>מדרג ${GRADE_NAMES[g]}: ${alloc[g].seg3} ימים × ₪${RATES[g].seg3}</span><span class="value">${fmt(a)} ₪</span></div>`;
-        }
-      }
-    }
-
-    // Pre-cap total (only if capped)
-    if (capped){
-      html += `<div class="result-row" style="margin-top:8px"><span class="label">סה"כ לפני תקרה</span><span class="value">${fmt(uncapped)} ₪</span></div>`;
-    }
+    renderSeg(`ימים 1–${Math.min(30, total)} (מקטע בסיס)`, 'seg1', 'seg1');
+    if (seg2Size > 0) renderSeg(`ימים 31–${30 + seg2Size} (מקטע מוגדל)`, 'seg2', 'seg2');
+    if (seg3Size > 0) renderSeg('ימים 46 ואילך', 'seg3', 'seg3');
 
     html += `<div class="result-total"><span>כרטיס Fighter משוער :</span><span>${fmt(finalAmt)} ₪</span></div>`;
-
     if (capped){
       html += `<div class="capped-note" style="text-align:center;padding-top:10px">* הסכום נקבע בהתאם לתקרה של מדרג ${capGrade}</div>`;
     }
