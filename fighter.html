@@ -377,6 +377,7 @@
     function renderSeg(header, segKey, rateKey){
       const hasDays = GRADES.some(g => alloc[g][segKey] > 0);
       if (!hasDays) return;
+      if (budget <= 0){ for (const g of GRADES) overCapDays += alloc[g][segKey]; return; }
       const segDays = GRADES.reduce((a,g) => a + alloc[g][segKey], 0);
       html += `<div class="result-seg-header">${header} (${segDays} ימים)</div>`;
       for (const g of GRADES){
