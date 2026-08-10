@@ -418,16 +418,10 @@
         } else {
           const daysIn   = Math.floor(budget / rate);
           const daysOver = d - daysIn;
-          const complement = budget - daysIn * rate;
           if (daysIn > 0){
             html += `<div class="result-row-sub"><span>מדרג ${GRADE_NAMES[g]}: ${daysIn} ימים × ₪${rate}</span><span class="value">${fmt(daysIn * rate)} ₪</span></div>`;
           }
-          if (complement > 0){
-            html += `<div class="result-row-sub"><span>השלמה לתקרה</span><span class="value">${fmt(complement)} ₪</span></div>`;
-            overCapDays += daysOver - 1;
-          } else {
-            overCapDays += daysOver;
-          }
+          overCapDays += daysOver;
           budget = 0;
         }
       }
@@ -439,7 +433,7 @@
 
     for (const g of GRADES) overCapDays += aboveCapPool[g];
     if (overCapDays > 0){
-      html += `<div class="result-row-sub" style="font-style:italic"><span style="color:var(--muted)">${overCapDays} הימים הנוספים שביצעת חורגים מהתקרה ולכן אינם משפיעים על הסכום ולא מוצגים בחישוב הזכאות.</span><span class="value" style="color:var(--muted)">—</span></div>`;
+      html += `<div class="result-row-sub" style="font-style:italic"><span style="color:var(--muted)">${overCapDays} הימים הנוספים שביצעת חורגים מהתקרה ולכן אינם משפיעים על הסכום ולא מוצגים בחישוב הזכאות.</span></div>`;
     }
 
     html += `<div class="result-total"><span>כרטיס Fighter משוער :</span><span>${fmt(finalAmt)} ₪</span></div>`;
