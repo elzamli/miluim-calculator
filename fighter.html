@@ -391,7 +391,7 @@
           html += `<div class="result-row-sub"><span>מדרג ${GRADE_NAMES[g]}: ${d} ימים × ₪${rate}</span><span class="value">${fmt(fullAmt)} ₪</span></div>`;
           budget -= fullAmt;
         } else {
-          const daysIn   = Math.floor(budget / rate);
+          const daysIn   = Math.ceil(budget / rate);
           const daysOver = d - daysIn;
           if (daysIn > 0){
             html += `<div class="result-row-sub"><span>מדרג ${GRADE_NAMES[g]}: ${daysIn} ימים × ₪${rate}</span><span class="value">${fmt(daysIn * rate)} ₪</span></div>`;
