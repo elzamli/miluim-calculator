@@ -30,10 +30,10 @@
     .voucher{ position:relative; z-index:2; width:100%; max-width:600px; background:var(--paper); border-radius:18px; box-shadow:0 30px 70px -24px rgba(0,0,0,.6), 0 2px 0 rgba(255,255,255,.4) inset; }
 
     /* Stub header */
-    .vstub{ background:linear-gradient(120deg,var(--navy),var(--navy-2)); border-radius:18px 18px 0 0; padding:18px 30px 20px; display:flex; align-items:center; justify-content:space-between; gap:14px; position:relative; }
+    .vstub{ background:linear-gradient(120deg,var(--navy),var(--navy-2)); border-radius:18px 18px 0 0; padding:18px 30px 20px; display:flex; align-items:center; justify-content:center; gap:14px; position:relative; }
     .vstub::after{ content:""; position:absolute; left:30px; right:30px; bottom:10px; height:1px; background:linear-gradient(90deg,transparent,rgba(200,162,78,.55),transparent); }
     .eyebrow{ font-size:10.5px; font-weight:700; letter-spacing:.18em; color:var(--gold); text-transform:uppercase; }
-    .vstub-title{ font-family:'Heebo',sans-serif; font-size:15px; font-weight:800; color:#fff; margin-top:3px; white-space:nowrap; }
+    .vstub-title{ font-family:'Heebo',sans-serif; font-size:28px; font-weight:800; color:#fff; margin-top:3px; white-space:nowrap; text-align:center; }
     .vstub-r{ text-align:left; }
     .seal{ width:54px; height:54px; border-radius:50%; border:2px solid var(--gold); display:flex; flex-direction:column; align-items:center; justify-content:center; color:var(--gold); flex-shrink:0; box-shadow:0 0 0 3px rgba(200,162,78,.15); }
     .seal b{ font-family:'Heebo',sans-serif; font-size:13px; font-weight:900; line-height:1; }
@@ -147,6 +147,9 @@
       .vbody{ padding:24px 20px; } .vfoot{ padding:16px 20px 22px; }
       h1.title{ font-size:23px; } .grade-grid{ grid-template-columns:1fr; }
       .seal{ display:none; } .mb-pad{ padding:26px 20px; }
+      .result-total{ padding:14px 14px; }
+      .result-total span:first-child{ font-size:12px; white-space:nowrap; }
+      .result-total span:last-child{ font-size:24px; white-space:nowrap; }
     }
   </style>
 </head>
@@ -208,7 +211,7 @@
     <!-- Stub header -->
     <div class="vstub">
       <div class="vstub-l">
-        <div class="vstub-title">כרטיס Fighter לשנת 2026</div>
+        <div class="vstub-title">מחשבון כרטיס Fighter לשנת 2026</div>
       </div>
     </div>
 
@@ -216,8 +219,6 @@
 
     <!-- Body -->
     <div class="vbody">
-      <h1 class="title">מחשבון כרטיס Fighter</h1>
-      <div class="hero-underline"></div>
       <div class="hero-note">
         <div class="note-pill">את מספר ימי המילואים שביצעת בשנת 2026 ניתן לבדוק בטופס 3010 שניתן להפיק ב<a href="https://www.miluim.idf.il/personalzone/milforms/form-3010" target="_blank" rel="noopener noreferrer">אתר המילואים</a>.</div>
         <div class="note-pill">לא בטוחים מה המדרג שלכם?<br><a href="#" class="cta-link" onclick="openGradeModal();return false;">לחצו כאן</a></div>
