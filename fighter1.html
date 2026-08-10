@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>כרטיס Fighter מילואים 2026</title>
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700;800&family=Heebo:wght@500;700;800;900&family=Frank+Ruhl+Libre:wght@700;900&display=swap" rel="stylesheet"/>
+  <style>
+    *{ margin:0; padding:0; box-sizing:border-box; }
+    :root{
+      --navy:#14254c; --navy-2:#1e3a72; --hero:#0f1e3d; --ink:#23293a; --muted:#6a7280;
+      --gold:#16b0c0; --gold-deep:#0f93a3; --gold-soft:#e3f4f4;
+      --cyan:#0aa0bd; --cyan-deep:#0a8aa3;
+      --paper:#fdfcf9; --inset:#f5f1e7; --line:#e8e3d6; --amber:#b8860b;
+    }
+    body{ font-family:'Assistant','Segoe UI',Arial,sans-serif; direction:rtl; background:#0c1730; color:var(--ink); -webkit-font-smoothing:antialiased; }
+    a{ color:var(--cyan-deep); font-weight:600; text-decoration:none; } a:hover{ text-decoration:underline; }
+
+    /* NAVBAR */
+    .navbar{ background:var(--navy); display:flex; align-items:center; justify-content:space-between; padding:0 28px; height:64px; gap:16px; border-bottom:2px solid var(--gold); }
+    .nav-center{ font-family:'Heebo',sans-serif; font-size:19px; font-weight:700; color:#fff; flex:1; text-align:center; letter-spacing:.3px; }
+    .logo-img{ height:46px; width:auto; }
+    .nav-left{ display:flex; gap:10px; }
+
+    /* HERO */
+    .page-hero{ position:relative; overflow:hidden; background:var(--hero); padding:54px 24px 60px; display:flex; justify-content:center; }
+    .page-hero::after{ content:""; position:absolute; inset:0; background-image:repeating-linear-gradient(45deg,rgba(200,162,78,.05) 0 1px,transparent 1px 16px),repeating-linear-gradient(-45deg,rgba(255,255,255,.04) 0 1px,transparent 1px 22px); pointer-events:none; }
+
+    /* ===== CARD ===== */
+    .voucher{ position:relative; z-index:2; width:100%; max-width:600px; background:var(--paper); border-radius:18px; box-shadow:0 30px 70px -24px rgba(0,0,0,.6), 0 2px 0 rgba(255,255,255,.4) inset; }
+
+    /* Stub header */
+    .vstub{ background:linear-gradient(120deg,var(--navy),var(--navy-2)); border-radius:18px 18px 0 0; padding:18px 30px 20px; display:flex; align-items:center; justify-content:center; gap:14px; position:relative; }
+    .vstub::after{ content:""; position:absolute; left:30px; right:30px; bottom:10px; height:1px; background:linear-gradient(90deg,transparent,rgba(200,162,78,.55),transparent); }
+    .eyebrow{ font-size:10.5px; font-weight:700; letter-spacing:.18em; color:var(--gold); text-transform:uppercase; }
+    .vstub-title{ font-family:'Heebo',sans-serif; font-size:28px; font-weight:800; color:#fff; margin-top:3px; white-space:nowrap; text-align:center; }
+    .vstub-r{ text-align:left; }
+    .seal{ width:54px; height:54px; border-radius:50%; border:2px solid var(--gold); display:flex; flex-direction:column; align-items:center; justify-content:center; color:var(--gold); flex-shrink:0; box-shadow:0 0 0 3px rgba(200,162,78,.15); }
+    .seal b{ font-family:'Heebo',sans-serif; font-size:13px; font-weight:900; line-height:1; }
+    .seal small{ font-size:8px; letter-spacing:.1em; margin-top:2px; opacity:.85; }
+
+    /* Perforation */
+    .perf{ position:relative; height:26px; }
+    .perf::before, .perf::after{ content:""; position:absolute; top:50%; width:26px; height:26px; border-radius:50%; background:var(--hero); transform:translateY(-50%); }
+    .perf::before{ right:-13px; } .perf::after{ left:-13px; }
+    .perf .dash{ position:absolute; top:50%; right:16px; left:16px; border-top:2px dashed #cbb98e; transform:translateY(-50%); }
+
+    /* Body */
+    .vbody{ padding:26px 38px 30px; }
+    h1.title{ font-family:'Heebo',sans-serif; font-size:30px; font-weight:900; color:var(--navy); text-align:center; line-height:1.15; letter-spacing:-.3px; }
+    .hero-underline{ width:54px; height:4px; background:var(--gold); border-radius:2px; margin:12px auto 14px; }
+    .hero-note{ display:flex; gap:14px; flex-wrap:wrap; margin:6px 0 24px; }
+    .note-pill{ flex:1; min-width:200px; background:var(--inset); border:1px solid var(--line); border-radius:11px; padding:11px 13px; font-size:12px; color:var(--muted); line-height:1.55; text-align:center; }
+    .note-pill b{ color:var(--navy); }
+
+    /* Section head */
+    .section-head{ display:flex; align-items:center; gap:11px; margin:0 0 14px; }
+    .step{ width:27px; height:27px; border-radius:50%; background:var(--navy); color:var(--gold); font-family:'Heebo',sans-serif; font-weight:800; font-size:13px; display:flex; align-items:center; justify-content:center; flex-shrink:0; border:1.5px solid var(--gold); }
+    .section-head h3{ font-family:'Heebo',sans-serif; font-size:15.5px; font-weight:700; color:var(--navy); }
+    .section-head .hr{ flex:1; height:1px; background:var(--line); }
+
+    /* Grades */
+    .grade-grid{ display:grid; grid-template-columns:1fr 1fr 1fr; gap:11px; margin-bottom:24px; }
+    .form-group{ background:#fff; border:1.5px solid var(--line); border-radius:13px; padding:11px 13px; transition:border-color .15s, box-shadow .15s; }
+    .form-group:focus-within{ border-color:var(--cyan); box-shadow:0 0 0 4px rgba(10,160,189,.13); }
+    .fg-top{ display:flex; align-items:center; gap:8px; margin-bottom:6px; }
+    .g-chip{ font-family:'Heebo',sans-serif; font-weight:800; font-size:12.5px; color:#fff; background:var(--navy-2); border-radius:7px; padding:3px 9px; min-width:34px; text-align:center; }
+    .form-group[data-top="1"] .g-chip{ background:var(--gold-deep); }
+    .g-name{ font-size:12px; color:var(--muted); font-weight:600; }
+    .form-group input{ width:100%; border:none; outline:none; background:transparent; font-family:'Heebo',sans-serif; font-size:21px; font-weight:700; color:var(--ink); direction:rtl; }
+    .form-group input::placeholder{ color:#c8cdd6; font-weight:600; }
+    input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{ -webkit-appearance:none; margin:0; }
+    input[type=number]{ -moz-appearance:textfield; appearance:textfield; }
+
+    /* Total days */
+    .summary-row{ display:flex; justify-content:space-between; align-items:center; padding:14px 18px; background:linear-gradient(120deg,var(--navy),var(--navy-2)); border-radius:13px; color:#fff; margin-bottom:16px; }
+    .summary-row span:first-child{ font-weight:600; font-size:13.5px; opacity:.9; }
+    #total-days-display{ font-family:'Heebo',sans-serif; font-size:27px; font-weight:900; color:var(--gold); line-height:1; }
+    .sum-unit{ font-size:12px; font-weight:600; opacity:.7; margin-right:5px; color:#fff; }
+
+    /* Buttons */
+    .btn-calc{ width:100%; background:linear-gradient(120deg,var(--navy),var(--navy-2)); color:var(--gold); border:1.5px solid var(--gold); border-radius:50px; padding:15px; font-size:16px; font-weight:800; font-family:'Heebo',sans-serif; cursor:pointer; letter-spacing:.02em; box-shadow:0 12px 24px -12px rgba(15,30,61,.7); transition:transform .1s, box-shadow .15s, filter .15s; }
+    .btn-calc:hover{ transform:translateY(-1px); filter:brightness(1.08); }
+    .btn-calc:active{ transform:translateY(0); }
+    .btn-reset{ width:100%; background:transparent; color:var(--navy); border:1.5px solid var(--line); border-radius:50px; padding:12px; font-size:14px; font-weight:700; cursor:pointer; font-family:inherit; margin-top:9px; transition:background .15s,border-color .15s; }
+    .btn-reset:hover{ background:var(--inset); border-color:#d8cdab; }
+
+    /* Error */
+    .error-msg{ display:none; background:#fdecec; border:1px solid #f3c2c0; border-radius:11px; padding:12px 16px; color:#c0322b; font-size:13.5px; font-weight:700; margin-top:13px; text-align:center; }
+
+    /* Results */
+    .result-area{ display:none; margin-top:20px; border:1.5px solid #cfe6e8; border-radius:15px; overflow:hidden; background:#fff; }
+    .result-area.visible{ display:block; animation:rise .35s ease; }
+    @keyframes rise{ from{ opacity:0; transform:translateY(8px);} to{opacity:1;transform:none;} }
+    .ra-head{ background:var(--inset); padding:13px 20px; font-family:'Heebo',sans-serif; font-weight:700; font-size:14.5px; color:var(--navy); border-bottom:1px solid var(--line); display:flex; align-items:center; gap:8px; }
+    .ra-head::before{ content:""; width:9px; height:9px; border-radius:50%; background:var(--gold); box-shadow:0 0 0 3px rgba(200,162,78,.22); }
+    .ra-body{ padding:4px 20px 18px; }
+    .result-row{ display:flex; justify-content:space-between; align-items:center; padding:10px 0; border-bottom:1px dashed var(--line); font-size:13.5px; }
+    .result-row:last-child{ border-bottom:none; }
+    .result-row .label{ color:var(--muted); }
+    .result-row .value{ font-family:'Heebo',sans-serif; font-weight:800; color:var(--navy); }
+    .result-seg-header{ padding:13px 0 4px; font-size:12px; font-weight:700; color:var(--gold-deep); letter-spacing:.02em; border-bottom:1px solid var(--line); }
+    .result-row-sub{ display:flex; justify-content:space-between; padding:5px 0 5px 14px; font-size:12.5px; color:var(--muted); }
+    .result-row-sub .value{ font-weight:700; color:var(--navy); font-family:'Heebo',sans-serif; }
+    .result-total{ display:flex; justify-content:space-between; align-items:center; margin-top:14px; padding:18px 22px; background:linear-gradient(120deg,var(--navy),var(--navy-2)); border-radius:13px; color:#fff; position:relative; overflow:hidden; }
+    .result-total::after{ content:""; position:absolute; inset:0; background:repeating-linear-gradient(-45deg,rgba(200,162,78,.07) 0 1px,transparent 1px 12px); }
+    .result-total span:first-child{ font-weight:600; font-size:13.5px; opacity:.92; position:relative; }
+    .result-total span:last-child{ font-family:'Heebo',sans-serif; font-weight:900; font-size:30px; color:var(--gold); position:relative; letter-spacing:.5px; }
+    .not-eligible{ text-align:center; padding:22px 16px; color:var(--ink); font-size:16px; font-weight:700; }
+    .not-eligible small{ display:block; font-size:13px; color:var(--muted); margin-top:8px; font-weight:500; }
+    .capped-note{ font-size:12px; color:var(--gold-deep); font-weight:700; text-align:left; padding:8px 0 2px; }
+
+    /* Rates table in modal */
+    .rates-table{ width:100%; border-collapse:collapse; font-size:13px; margin:14px 0; }
+    .rates-table th{ background:var(--navy); color:var(--gold); font-family:'Heebo',sans-serif; font-weight:700; padding:8px 10px; text-align:center; }
+    .rates-table td{ padding:8px 10px; text-align:center; border-bottom:1px solid var(--line); }
+    .rates-table tr:last-child td{ border-bottom:none; }
+    .rates-table tr:nth-child(even) td{ background:var(--inset); }
+
+    /* Foot stub */
+    .vfoot{ padding:18px 38px 24px; text-align:center; }
+    .barcode{ height:46px; margin:0 auto 10px; max-width:300px; background:
+        repeating-linear-gradient(90deg, var(--navy) 0 2px, transparent 2px 4px, var(--navy) 4px 7px, transparent 7px 9px, var(--navy) 9px 10px, transparent 10px 14px, var(--navy) 14px 17px, transparent 17px 19px); opacity:.85; border-radius:2px; }
+    .serial{ font-family:'Heebo',monospace; font-size:12.5px; font-weight:700; color:var(--navy); letter-spacing:.18em; }
+    .finenote{ font-size:13px; color:var(--muted); margin-top:6px; letter-spacing:.02em; }
+    .cta-link{ color:var(--gold); font-weight:700; text-decoration:underline; font-size:13px; }
+    .cta-link:hover{ opacity:.75; }
+
+    /* Footer */
+    .footer{ background:var(--navy); color:#9fb6d8; text-align:center; padding:18px; font-size:12px; margin-top:34px; line-height:1.6; border-top:2px solid var(--gold); }
+
+    /* Modal */
+    .modal-overlay{ position:fixed; inset:0; background:rgba(8,16,38,.8); backdrop-filter:blur(3px); z-index:9999; display:flex; align-items:center; justify-content:center; padding:20px; }
+    .modal-box{ background:var(--paper); border-radius:18px; max-width:600px; width:100%; direction:rtl; text-align:right; box-shadow:0 30px 80px rgba(0,0,0,.5); overflow:hidden; border-top:4px solid var(--gold); }
+    .mb-pad{ padding:34px 40px 32px; }
+    .modal-box h2{ font-family:'Heebo',sans-serif; font-size:23px; font-weight:900; color:var(--navy); margin-bottom:14px; }
+    .modal-box p{ font-size:14px; color:#3a4252; line-height:1.75; }
+    .modal-divider{ border:none; border-top:1px solid var(--line); margin:18px 0; }
+    .modal-disclaimer{ font-size:13px; color:#2a5560; font-weight:600; line-height:1.7; background:var(--gold-soft); border:1px solid #c2e4e6; border-radius:12px; padding:14px 16px; }
+    .modal-disclaimer-title{ font-weight:800; display:block; margin-bottom:6px; font-size:13.5px; color:var(--navy); }
+    .btn-confirm{ width:100%; background:linear-gradient(120deg,var(--navy),var(--navy-2)); color:var(--gold); border:1.5px solid var(--gold); border-radius:50px; padding:14px; font-size:16px; font-weight:800; font-family:'Heebo',sans-serif; cursor:pointer; margin-top:22px; }
+    .btn-confirm:hover{ filter:brightness(1.08); }
+
+    @media (max-width:560px){
+      .navbar{ padding:0 12px; height:58px; } .nav-center{ font-size:13px; }
+      .page-hero{ padding:24px 12px 30px; } .vstub{ padding:14px 18px 16px; } .vstub::after{ left:18px; right:18px; }
+      .vbody{ padding:24px 20px; } .vfoot{ padding:16px 20px 22px; }
+      h1.title{ font-size:23px; } .grade-grid{ grid-template-columns:1fr; }
+      .seal{ display:none; } .mb-pad{ padding:26px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="welcome-modal">
+  <div class="modal-box">
+    <div class="mb-pad">
+      <h2>משרת/ת מילואים יקר/ה</h2>
+      <hr class="modal-divider" />
+      <p>אנו מבקשים להביע את הערכתנו העמוקה על תרומתכם המשמעותית לביטחון מדינת ישראל ולחוסנה.<br><br>מחשבון זה נועד לשקף את גובה הזכאות לכרטיס Fighter בגין שירות המילואים בשנת 2026.</p>
+      <hr class="modal-divider" />
+      <div class="modal-disclaimer">
+        <span class="modal-disclaimer-title">הבהרה:</span>
+        החישוב המוצג במחשבון זה הינו אומדן בלבד, המבוסס על נתונים והנחות כלליות, ואינו מהווה התחייבות או קביעה מחייבת לגבי סכום הכרטיס הסופי.<br><br>הסכום בפועל ייקבע בהתאם לנתוני הזכאות האישיים, כפי שייקלטו ויאושרו על ידי הגורמים המוסמכים.
+      </div>
+      <button class="btn-confirm" onclick="closeModal()">מאשר/ת והמשך לחישוב</button>
+    </div>
+  </div>
+</div>
+
+<!-- GRADE MODAL -->
+<div class="modal-overlay" id="grade-modal" style="display:none" onclick="if(event.target===this)closeGradeModal()">
+  <div class="modal-box">
+    <div class="mb-pad">
+      <h2>מה המדרג של היחידה שלי?</h2>
+      <hr class="modal-divider" />
+      <p>כרטיס Fighter ניתן רק ליחידות במדרגים א'+, א' ו-ב'. להלן חלוקה כללית:</p>
+      <div style="margin:16px 0 4px; display:flex; flex-direction:column; gap:8px;">
+        <div style="display:flex;gap:10px;align-items:baseline"><span class="g-chip" style="background:var(--navy-2);flex-shrink:0">א׳+</span><span style="font-size:13.5px;color:var(--ink)">גדודים לוחמים / יחידות קצה קדמיות</span></div>
+        <div style="display:flex;gap:10px;align-items:baseline"><span class="g-chip" style="background:var(--navy-2);flex-shrink:0">א׳</span><span style="font-size:13.5px;color:var(--ink)">חטיבות</span></div>
+        <div style="display:flex;gap:10px;align-items:baseline"><span class="g-chip" style="background:var(--navy-2);flex-shrink:0">ב׳</span><span style="font-size:13.5px;color:var(--ink)">אוגדות</span></div>
+      </div>
+      <hr class="modal-divider" />
+      <div class="modal-disclaimer">
+        <span class="modal-disclaimer-title">שים לב</span>
+        הפירוט לעיל הינו כללי בלבד ונועד לצורך הערכה. הסיווג הסופי והקובע של מדרג היחידה לחישוב כרטיס Fighter נקבע אך ורק על פי מדיניות מחלקת המילואים באגף כוח האדם ובהתאם לנתוני השירות בפועל.<br><br>
+        למידע נוסף ובירורים ניתן לפנות למוקד המילואים בטלפון <b>1111</b> שלוחה <b>4</b>.
+      </div>
+      <button class="btn-confirm" onclick="closeGradeModal()">הבנתי, סגור</button>
+    </div>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div><img class="logo-img" src="/static/logo_new.png" alt="לוגו צה״ל" /></div>
+  <div class="nav-center">מחלקת מילואים אכ"א</div>
+  <div class="nav-left">
+    <img class="logo-img" src="/static/יחידה.png" alt="סמל יחידה" />
+  </div>
+</nav>
+
+<!-- HERO + CARD -->
+<div class="page-hero">
+  <div class="voucher">
+
+    <!-- Stub header -->
+    <div class="vstub">
+      <div class="vstub-l">
+        <div class="vstub-title">מחשבון כרטיס Fighter לשנת 2026</div>
+      </div>
+    </div>
+
+    <div class="perf"><span class="dash"></span></div>
+
+    <!-- Body -->
+    <div class="vbody">
+      <div class="hero-note">
+        <div class="note-pill">את מספר ימי המילואים שביצעת בשנת 2026 ניתן לבדוק בטופס 3010 שניתן להפיק ב<a href="https://www.miluim.idf.il/personalzone/milforms/form-3010" target="_blank" rel="noopener noreferrer">אתר המילואים</a>.</div>
+        <div class="note-pill">לא בטוחים מה המדרג שלכם?<br><a href="#" class="cta-link" onclick="openGradeModal();return false;">לחצו כאן</a></div>
+      </div>
+
+      <div class="section-head"><h3>ימי שמ"פ לפי מדרג</h3><span class="hr"></span></div>
+      <div class="grade-grid">
+        <div class="form-group">
+          <div class="fg-top"><span class="g-name">מדרג</span><span class="g-chip">א'+</span></div>
+          <input type="number" id="input-aleph-plus" min="0" max="365" step="1" placeholder="0" oninput="updateTotal()" />
+        </div>
+        <div class="form-group">
+          <div class="fg-top"><span class="g-name">מדרג</span><span class="g-chip">א'</span></div>
+          <input type="number" id="input-aleph" min="0" max="365" step="1" placeholder="0" oninput="updateTotal()" />
+        </div>
+        <div class="form-group">
+          <div class="fg-top"><span class="g-name">מדרג</span><span class="g-chip">ב'</span></div>
+          <input type="number" id="input-bet" min="0" max="365" step="1" placeholder="0" oninput="updateTotal()" />
+        </div>
+      </div>
+
+      <div class="summary-row"><span>סה"כ ימי שמ"פ מזכים</span><span><span id="total-days-display">0</span><span class="sum-unit">ימים</span></span></div>
+
+      <button class="btn-calc" onclick="calculate()">חשב כרטיס Fighter</button>
+      <button class="btn-reset" onclick="resetCalculator()">איפוס</button>
+
+      <div class="error-msg" id="error-msg"></div>
+
+      <div class="result-area" id="results">
+        <div class="ra-head">פירוט הזכאות</div>
+        <div class="ra-body" id="result-content"></div>
+      </div>
+    </div>
+
+    <div class="perf"><span class="dash"></span></div>
+
+    <!-- Foot stub -->
+    <div class="vfoot">
+      <div class="finenote">אומדן בלבד · אינו מהווה התחייבות לסכום הסופי</div>
+    </div>
+
+  </div>
+</div>
+
+<footer class="footer">מחשבון כרטיס Fighter 2026 — אומדן בלבד. הסכום הסופי ייקבע על ידי הגורמים המוסמכים.</footer>
+
+<script>
+  const utmSource = new URLSearchParams(window.location.search).get('utm_source') || 'direct';
+  const GRADES = ['aleph_plus', 'aleph', 'bet'];
+  const GRADE_NAMES = { aleph_plus: "א'+", aleph: "א'", bet: "ב'" };
+  const RATES = {
+    aleph_plus: { seg1: 45, seg2: 120, seg3: 70 },
+    aleph:      { seg1: 40, seg2: 100, seg3: 60 },
+    bet:        { seg1: 30, seg2:  80, seg3: 45 },
+  };
+
+  function getNum(id){ const v = parseInt(document.getElementById(id).value, 10); return isNaN(v) || v < 0 ? 0 : v; }
+  function fmt(n){ return n.toLocaleString('he-IL', { minimumFractionDigits: 0, maximumFractionDigits: 0 }); }
+  function closeModal(){ document.getElementById('welcome-modal').style.display = 'none'; }
+  function openGradeModal(){ document.getElementById('grade-modal').style.display = 'flex'; }
+  function closeGradeModal(){ document.getElementById('grade-modal').style.display = 'none'; }
+
+  function updateTotal(){
+    let t = 0;
+    for (const g of GRADES) t += getNum('input-' + g.replace('_', '-'));
+    document.getElementById('total-days-display').textContent = t;
+  }
+
+  function showError(msg){ const el = document.getElementById('error-msg'); el.textContent = msg; el.style.display = 'block'; document.getElementById('results').classList.remove('visible'); }
+  function hideError(){ document.getElementById('error-msg').style.display = 'none'; }
+
+  function calculate(){
+    const btn = document.querySelector('.btn-calc');
+    if (btn.disabled) return;
+    btn.disabled = true; setTimeout(() => btn.disabled = false, 2000);
+    hideError();
+
+    const days = {};
+    for (const g of GRADES) days[g] = getNum('input-' + g.replace('_', '-'));
+    for (const g of GRADES){ if (days[g] > 365){ showError('שגיאה: ניתן להזין עד 365 ימים בשדה בודד'); return; } }
+
+    const total = Object.values(days).reduce((a, b) => a + b, 0);
+    if (total > 365){ showError('שגיאה: סך הכל ימים חורג מ-365'); return; }
+
+    if (total < 10){
+      showNotEligible();
+      logToServer(days, '', 0);
+      return;
+    }
+
+    // Segment capacities
+    const seg2Size = Math.max(0, Math.min(15, total - 30)); // days 31-45
+    const seg3Size = Math.max(0, total - 45);               // days 46+
+
+    // Mutable pools
+    const pool = { ...days };
+    const alloc = {};
+    for (const g of GRADES) alloc[g] = { seg1: 0, seg2: 0, seg3: 0 };
+
+    // Fill seg2 (31-45) from highest grade first
+    let rem = seg2Size;
+    for (const g of GRADES){
+      const take = Math.min(pool[g], rem);
+      alloc[g].seg2 = take; pool[g] -= take; rem -= take;
+      if (rem <= 0) break;
+    }
+
+    // Fill seg3 (46+) from highest remaining grade first
+    rem = seg3Size;
+    for (const g of GRADES){
+      const take = Math.min(pool[g], rem);
+      alloc[g].seg3 = take; pool[g] -= take; rem -= take;
+      if (rem <= 0) break;
+    }
+
+    // seg1 (1-30) gets whatever remains
+    for (const g of GRADES) alloc[g].seg1 = pool[g];
+
+    // Calculate uncapped total
+    let uncapped = 0;
+    for (const g of GRADES){
+      uncapped += alloc[g].seg1 * RATES[g].seg1
+                + alloc[g].seg2 * RATES[g].seg2
+                + alloc[g].seg3 * RATES[g].seg3;
+    }
+
+    // Determine cap
+    let cap = Infinity, capGrade = '';
+    if (days.aleph_plus >= 36){
+      cap = 5000; capGrade = "א'+";
+    } else if (days.aleph_plus + days.aleph >= 36){
+      cap = 4250; capGrade = "א'";
+    } else if (total >= 36){
+      cap = 3250; capGrade = "ב'";
+    }
+
+    const finalAmt = Math.min(uncapped, cap);
+    const capped   = uncapped > cap && cap !== Infinity;
+
+    // When capped: recompute allocation with seg2→seg1→seg3 so cheap grades are pushed above cap
+    let displayAlloc = alloc;
+    const aboveCapPool = {};
+    for (const g of GRADES) aboveCapPool[g] = 0;
+
+    if (capped) {
+      const pool2 = { ...days };
+      const da = {};
+      for (const g of GRADES) da[g] = { seg1: 0, seg2: 0, seg3: 0 };
+
+      let rem2 = seg2Size;
+      for (const g of GRADES) { const t = Math.min(pool2[g], rem2); da[g].seg2 = t; pool2[g] -= t; rem2 -= t; if (rem2 <= 0) break; }
+
+      const seg1Size = total - seg2Size - seg3Size;
+      rem2 = seg1Size;
+      for (const g of GRADES) { const t = Math.min(pool2[g], rem2); da[g].seg1 = t; pool2[g] -= t; rem2 -= t; if (rem2 <= 0) break; }
+
+      rem2 = seg3Size;
+      for (const g of GRADES) { const t = Math.min(pool2[g], rem2); da[g].seg3 = t; pool2[g] -= t; rem2 -= t; if (rem2 <= 0) break; }
+
+      for (const g of GRADES) aboveCapPool[g] = pool2[g];
+      displayAlloc = da;
+    }
+
+    showResults(days, displayAlloc, aboveCapPool, uncapped, finalAmt, capped, cap, capGrade, seg2Size, seg3Size);
+    logToServer(days, capGrade, finalAmt);
+  }
+
+  function showNotEligible(){
+    document.getElementById('result-content').innerHTML =
+      '<div class="not-eligible">לא זכאי לכרטיס Fighter<small>נדרש לפחות 10 ימי שמ"פ</small></div>';
+    document.getElementById('results').classList.add('visible');
+  }
+
+  function showResults(days, displayAlloc, aboveCapPool, uncapped, finalAmt, capped, cap, capGrade, seg2Size, seg3Size){
+    let html = '';
+    const total = Object.values(days).reduce((a,b)=>a+b,0);
+    let budget = capped ? cap : Infinity;
+
+    function renderSeg(header, segKey, rateKey){
+      const hasDays = GRADES.some(g => displayAlloc[g][segKey] > 0);
+      if (!hasDays) return;
+      const segDays = GRADES.reduce((a,g) => a + displayAlloc[g][segKey], 0);
+      html += `<div class="result-seg-header">${header} (${segDays} ימים)</div>`;
+      for (const g of GRADES){
+        const d = displayAlloc[g][segKey];
+        if (d <= 0) continue;
+        const rate = RATES[g][rateKey];
+        const fullAmt = d * rate;
+        if (budget <= 0){
+          html += `<div class="result-row-sub"><span>מדרג ${GRADE_NAMES[g]}: ${d} ימים — מעל התקרה</span><span class="value" style="color:var(--muted)">—</span></div>`;
+        } else if (fullAmt <= budget){
+          html += `<div class="result-row-sub"><span>מדרג ${GRADE_NAMES[g]}: ${d} ימים × ₪${rate}</span><span class="value">${fmt(fullAmt)} ₪</span></div>`;
+          budget -= fullAmt;
+        } else {
+          const daysIn  = Math.floor(budget / rate);
+          const daysOver = d - daysIn;
+          if (daysIn > 0){
+            html += `<div class="result-row-sub"><span>מדרג ${GRADE_NAMES[g]}: ${daysIn} ימים × ₪${rate}</span><span class="value">${fmt(daysIn * rate)} ₪</span></div>`;
+          }
+          html += `<div class="result-row-sub"><span>מדרג ${GRADE_NAMES[g]}: ${daysOver} ימים — מעל התקרה</span><span class="value" style="color:var(--muted)">—</span></div>`;
+          budget = 0;
+        }
+      }
+    }
+
+    renderSeg(`ימים 1–${Math.min(30, total)} (מקטע בסיס)`, 'seg1', 'seg1');
+    if (seg2Size > 0) renderSeg(`ימים 31–${30 + seg2Size} (מקטע מוגדל)`, 'seg2', 'seg2');
+    if (seg3Size > 0) renderSeg('ימים 46 ואילך', 'seg3', 'seg3');
+
+    // Days that didn't fit any segment (cheap grades pushed out when capped)
+    for (const g of GRADES) {
+      if (aboveCapPool[g] > 0) {
+        html += `<div class="result-row-sub"><span>מדרג ${GRADE_NAMES[g]}: ${aboveCapPool[g]} ימים — מעל התקרה</span><span class="value" style="color:var(--muted)">—</span></div>`;
+      }
+    }
+
+    html += `<div class="result-total"><span>כרטיס Fighter משוער :</span><span>${fmt(finalAmt)} ₪</span></div>`;
+    if (capped){
+      html += `<div class="capped-note" style="text-align:center;padding-top:10px">* הסכום נקבע בהתאם לתקרה של מדרג ${capGrade}</div>`;
+    }
+    document.getElementById('result-content').innerHTML = html;
+    document.getElementById('results').classList.add('visible');
+  }
+
+  function logToServer(days, capGrade, total){
+    fetch('/log-fighter', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        aleph_plus: days.aleph_plus || 0,
+        aleph:      days.aleph      || 0,
+        bet:        days.bet        || 0,
+        cap_grade:  capGrade,
+        total:      total,
+        source:     utmSource,
+      }),
+    }).catch(() => {});
+  }
+
+  function resetCalculator(){
+    for (const g of GRADES) document.getElementById('input-' + g.replace('_', '-')).value = '';
+    document.getElementById('total-days-display').textContent = '0';
+    hideError();
+    document.getElementById('results').classList.remove('visible');
+  }
+
+  if (new URLSearchParams(location.search).get('demo') === '1'){
+    closeModal();
+    document.getElementById('input-aleph-plus').value = 20;
+    document.getElementById('input-aleph').value = 20;
+    document.getElementById('input-bet').value = 20;
+    updateTotal(); calculate();
+  }
+</script>
+</body>
+</html>

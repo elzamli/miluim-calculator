@@ -243,6 +243,10 @@ def create_flask_app():
     def fighter():
         return send_from_directory(".", "fighter.html")
 
+    @app.route("/fighter1")
+    def fighter1():
+        return send_from_directory(".", "fighter1.html")
+
     @app.route("/s/<source>")
     def short_link(source):
         from flask import redirect
