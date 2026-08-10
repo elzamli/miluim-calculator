@@ -372,6 +372,7 @@
     let html = '';
     const total = Object.values(days).reduce((a,b)=>a+b,0);
     let budget = capped ? cap : Infinity;
+    let overCapDays = 0;
 
     function renderSeg(header, segKey, rateKey){
       const hasDays = GRADES.some(g => alloc[g][segKey] > 0);
@@ -384,17 +385,23 @@
         const rate = RATES[g][rateKey];
         const fullAmt = d * rate;
         if (budget <= 0){
-          html += `<div class="result-row-sub"><span>מדרג ${GRADE_NAMES[g]}: ${d} ימים — מעל התקרה</span><span class="value" style="color:var(--muted)">—</span></div>`;
+          overCapDays += d;
         } else if (fullAmt <= budget){
           html += `<div class="result-row-sub"><span>מדרג ${GRADE_NAMES[g]}: ${d} ימים × ₪${rate}</span><span class="value">${fmt(fullAmt)} ₪</span></div>`;
           budget -= fullAmt;
         } else {
-          const daysIn  = Math.floor(budget / rate);
+          const daysIn   = Math.floor(budget / rate);
           const daysOver = d - daysIn;
+          const complement = budget - daysIn * rate;
           if (daysIn > 0){
             html += `<div class="result-row-sub"><span>מדרג ${GRADE_NAMES[g]}: ${daysIn} ימים × ₪${rate}</span><span class="value">${fmt(daysIn * rate)} ₪</span></div>`;
           }
-          html += `<div class="result-row-sub"><span>מדרג ${GRADE_NAMES[g]}: ${daysOver} ימים — מעל התקרה</span><span class="value" style="color:var(--muted)">—</span></div>`;
+          if (complement > 0){
+            html += `<div class="result-row-sub"><span>השלמה לתקרה</span><span class="value">${fmt(complement)} ₪</span></div>`;
+            overCapDays += daysOver - 1;
+          } else {
+            overCapDays += daysOver;
+          }
           budget = 0;
         }
       }
@@ -403,6 +410,10 @@
     renderSeg(`ימים 1–${Math.min(30, total)} (מקטע בסיס)`, 'seg1', 'seg1');
     if (seg2Size > 0) renderSeg(`ימים 31–${30 + seg2Size} (מקטע מוגדל)`, 'seg2', 'seg2');
     if (seg3Size > 0) renderSeg('ימים 46 ואילך', 'seg3', 'seg3');
+
+    if (overCapDays > 0){
+      html += `<div class="result-row-sub" style="font-style:italic"><span style="color:var(--muted)">${overCapDays} הימים הנוספים שביצעת חורגים מהתקרה ולכן אינם משפיעים על הסכום ולא מוצגים בחישוב הזכאות.</span><span class="value" style="color:var(--muted)">—</span></div>`;
+    }
 
     html += `<div class="result-total"><span>כרטיס Fighter משוער :</span><span>${fmt(finalAmt)} ₪</span></div>`;
     if (capped){
